@@ -4,6 +4,7 @@ import CreateProduct from '../components/CreateProduct.vue';
 import CreateAnimal from "../components/CreateAnimal.vue";
 import Registration from "../components/Registration.vue";
 import HomePage from "../components/HomePage.vue";
+import Navbar from "../components/Navbar.vue";
 
 const routes = [
     {
@@ -26,6 +27,10 @@ const routes = [
     {
         path: '/register',
         component: Registration,
+    },
+    {
+        path: '/navbar',
+        component: Navbar,
     }
 ];
 
