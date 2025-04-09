@@ -11,7 +11,8 @@ import WhyChooseUs from '../components/WhyChooseUs.vue';
 const routes = [
     {
         path: '/',
-        component: HomePage,
+        component: CreateProduct,
+        // component: HomePage,
     },
     {
         path: '/adopt-animal',
@@ -26,7 +27,7 @@ const routes = [
         component: AskQuestion,
     },
     {
-        path: 'why-choose-us',
+        path: '/why-choose-us',
         component: WhyChooseUs,
     },
     {
