@@ -18,7 +18,6 @@
 
 
 
-
     <!-- Navigation -->
     <nav class="flex justify-between items-center bg-white shadow-sm p-4">
         <!-- Сол жақтағы логотип -->

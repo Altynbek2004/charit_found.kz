@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ProductList from '../components/ProductList.vue';
 import EditProduct from '../components/EditProduct.vue';
 import CreateProduct from '../components/CreateProduct.vue';
 import CreateAnimal from "../components/CreateAnimal.vue";
 import Registration from "../components/Registration.vue";
+import HomePage from "../components/HomePage.vue";
 
 const routes = [
     {
         path: '/',
-        component: ProductList,
+        component: HomePage,
     },
     {
         path: '/products/create',
