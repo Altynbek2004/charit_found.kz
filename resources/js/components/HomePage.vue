@@ -75,6 +75,13 @@
         </div>
     </section>
 
+    <find-animal></find-animal>
+    <adopt-animal></adopt-animal>
+    <ask-question></ask-question>
+    <everything-for-animals></everything-for-animals>
+    <why-choose-us></why-choose-us>
+    <contact-us></contact-us>
+    <Footer></Footer>
 
     </body>
 
@@ -82,12 +89,22 @@
 
 <script>
 import axios from 'axios';
+import FindAnimal from "@/components/FindAnimal.vue";
+import AdoptAnimal from "@/components/AdoptAnimal.vue";
+import AskQuestion from "@/components/AskQuestion.vue";
+import EverythingForAnimals from "@/components/EverythingForAnimals.vue";
+import WhyChooseUs from "@/components/WhyChooseUs.vue";
+import ContactUs from "@/components/ContactUs.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
     data() {
         return {
             products: [],
         };
+    },
+    components: {
+    FindAnimal, AdoptAnimal,AskQuestion,EverythingForAnimals,WhyChooseUs,ContactUs,Footer
     },
     async created() {
         const response = await axios.get('/api/products');
