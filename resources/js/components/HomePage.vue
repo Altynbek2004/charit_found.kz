@@ -42,8 +42,6 @@
     <contact-us></contact-us>
     <Footer></Footer>
 
-    </body>
-
 </template>
 
 <script>
