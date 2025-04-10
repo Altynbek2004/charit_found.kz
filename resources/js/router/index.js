@@ -5,32 +5,21 @@ import CreateAnimal from "../components/CreateAnimal.vue";
 import Registration from "../components/Registration.vue";
 import HomePage from "../components/HomePage.vue";
 import AdoptAnimal from '../components/AdoptAnimal.vue';
-import AskQuestion from '../components/AskQuestion.vue';
-import WhyChooseUs from '../components/WhyChooseUs.vue';
-import EverythingForAnimals from '../components/EverythingForAnimals.vue';
-import FindAnimal from '../components/FindAnimal.vue';
+import Navbar from "../components/Navbar.vue";
 
 const routes = [
     {
         path: '/',
-        // component: CreateProduct,
         component: HomePage,
     },
     {
         path: '/adopt-animal',
         component: AdoptAnimal,
     },
+
     {
         path: '/products/:id/edit',
         component: EditProduct,
-    },
-    {
-        path: '/ask-question',
-        component: AskQuestion,
-    },
-    {
-        path: '/why-choose-us',
-        component: WhyChooseUs,
     },
     {
         path: '/create-animal',
@@ -41,16 +30,8 @@ const routes = [
         component: Registration,
     },
     {
-        path: '/why-choose-us',
-        component: WhyChooseUs,
-    },
-    {
-        path: '/everything-for-animals',
-        component: EverythingForAnimals,
-    },
-    {
-        path: '/find-animal',
-        component: FindAnimal,
+        path: '/navbar',
+        component: Navbar,
     }
 ];
 
