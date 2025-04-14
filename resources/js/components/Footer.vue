@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
     <!-- Footer -->
     <footer class="bg-gray-100 mt-12">
@@ -10,7 +6,12 @@
         </div>
     </footer>
 </template>
-
+<script>
+export default
+{
+    name: 'Footer',
+}
+</script>
 <style scoped>
 
 </style>
