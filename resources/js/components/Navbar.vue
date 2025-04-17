@@ -31,10 +31,18 @@
             <li><a href="#" class="hover:underline">Чат-помощник</a></li>
         </ul>
 
+<<<<<<< Updated upstream
         <!-- Оң жақтағы сілтемелер -->
         <div class="flex items-center gap-10  mr-44">
             <span class="text-lg font-bold">RU</span>
             <span class="text-lg font-bold">Войти</span>
+=======
+            <!-- Язык және Войти -->
+            <div class="flex items-center gap-6">
+                <span class="text-lg font-bold">RU</span>
+                <a href=""><span class="text-lg font-bold">Войти</span></a>
+            </div>
+>>>>>>> Stashed changes
         </div>
     </nav>
     </body>

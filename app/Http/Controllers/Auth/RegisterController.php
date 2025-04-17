@@ -15,6 +15,11 @@ class RegisterController extends Controller
         $this->authService = $authService;
     }
 
+    public function registerForm()
+    {
+        return view('auth.register');
+    }
+
     public function registerStore(Request $request)
     {
         $validated = $request->validate([
