@@ -2,37 +2,39 @@
 
     <Navbar></Navbar>
     <!-- Hero section -->
-    <section class="flex justify-center bg-blue-200 p-6">
-        <img src="/storage/app/public/imageMenu/dog.png" alt="Pets" class="rounded-lg shadow-lg" />
+    <section class="bg-blue-200 py-6">
+        <div class="container mx-auto max-w-screen-xl px-4">
+            <img src="/storage/app/public/imageMenu/dog.png" alt="Pets" class="rounded-lg shadow-lg w-full h-auto object-cover" />
+        </div>
     </section>
+
 
     <div class="text-center text-2xl font-bold mt-6 mb-4"><h1>Приют “Амиго”</h1></div>
 
-    <!-- About Section -->
-    <section class="flex flex-col md:flex-row bg-white p-6 items-start justify-center gap-10">
-        <!-- Сол жақтағы сурет -->
-        <div class="flex justify-center md:w-1/2">
-            <img src="/storage/app/public/imageMenu/amigo.png" alt="Амиго Лого" class="w-170 h-190" />
-        </div>
+    <section class="py-4">
+        <div class="container mx-auto max-w-screen-xl flex justify-between items-center px-4">
+            <div class="flex flex-col md:flex-row items-center md:items-end gap-8">
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <img src="/storage/app/public/imageMenu/amigo.png" alt="Amigo logo"
+                         class="w-full h-auto object-contain border-none" />
+                </div>
 
-        <!-- Оң жақтағы текст + кнопка -->
-        <div class="md:w-1/2 text-lg font-medium space-y-4 flex flex-col justify-between h-full">
-            <div class="space-y-2">
-                <p>описание</p>
-                <p>описание</p>
-                <p>описание</p>
-                <p>описание</p>
-                <p>описание</p>
-            </div>
-
-            <!-- Кнопка оң төменде -->
-            <div class="flex justify-end mt-150 mr-30">
-                <button class="bg-blue-200 hover:bg-blue-300 px-4 py-2 rounded text-black font-bold">
-                    Сделать пожертвование
-                </button>
+                <div class="w-full md:w-1/2 flex flex-col justify-end space-y-2 text-center md:text-left">
+                    <p>описание</p>
+                    <p>описание</p>
+                    <p>описание</p>
+                    <p>описание</p>
+                    <p>описание</p>
+                </div>
             </div>
         </div>
+
     </section>
+
+
+
+
+
 
     <find-animal></find-animal>
     <adopt-animal></adopt-animal>
