@@ -18,4 +18,5 @@ Route::get('/{any}', function () {
     return view('welcome');
 })->where('any', '.*');
 
+Route::get('register',[RegisterController::class,'registerForm'])->name('register.form');
 Route::post('register', [RegisterController::class, 'registerStore'])->name('register.store');
