@@ -39,7 +39,7 @@
             <!-- Язык және Войти -->
             <div class="flex items-center gap-6">
                 <span class="text-lg font-bold">RU</span>
-                <a href="/register"><span class="text-lg font-bold">Войти</span></a>
+                <router-link to="/register" class="text-lg font-bold">Войти</router-link>
             </div>
         </div>
     </nav>
