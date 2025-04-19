@@ -8,19 +8,15 @@ class AuthService
 {
     public function register(array $data)
     {
-        $imagePath = null;
-        if (isset($data['image'])) {
-            $imagePath = $data['image']->store('profileImages', 'public');
-        }
-
         $user = User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'image' => $imagePath,
+            'avatar' => $data['image'] ?? null,
         ]);
 
         return $user;
     }
+
 }
