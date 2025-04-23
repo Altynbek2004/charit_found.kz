@@ -12,14 +12,13 @@
 
             <!-- Оң жақ -->
             <div class="flex gap-2">
-                <img src="/storage/app/public/imageMenu/image%2011.png" class="w-10 h-10" alt="Instagram" />
-                <img src="/storage/app/public/imageMenu/image%2012.png" class="w-10 h-10" alt="WhatsApp" />
-                <img src="/storage/app/public/imageMenu/image%2013.png" class="w-10 h-10" alt="Telegram" />
+                <a href="https://t.me/"><img src="/storage/app/public/imageMenu/image%2011.png" class="w-10 h-10" alt="Telegram" /></a>
+                <a href="https://instagram.com"><img src="/storage/app/public/imageMenu/image%2012.png" class="w-10 h-10" alt="Instagram" /></a>
+                <a href="https://wa.me/+77755938808"><img src="/storage/app/public/imageMenu/image%2013.png" class="w-10 h-10" alt="Whatsapp" /></a>
             </div>
         </div>
     </header>
 
-    <!-- Навигация -->
     <nav class="bg-white shadow-sm py-4">
         <div class="container mx-auto max-w-screen-xl flex justify-between items-center px-4">
             <!-- Лого -->
@@ -28,7 +27,6 @@
                 <span class="text-xl font-semibold whitespace-nowrap">Flowbite</span>
             </div>
 
-            <!-- Навигация -->
             <ul class="hidden md:flex space-x-6 font-bold">
                 <li><a href="/" class="hover:underline">Главная</a></li>
                 <li><a href="#" class="hover:underline">О нас</a></li>
@@ -36,10 +34,23 @@
                 <li><a href="#" class="hover:underline">Чат-помощник</a></li>
             </ul>
 
-            <!-- Язык және Войти -->
-            <div class="flex items-center gap-6">
-                <span class="text-lg font-bold">RU</span>
-                <router-link to="/register" class="text-lg font-bold">Войти</router-link>
+            <div class="relative">
+                <div class="flex items-center gap-6">
+      <span class="text-lg font-bold cursor-pointer" @click="toggleDropdown">
+        {{ selectedLanguage }}
+      </span>
+
+                    <router-link to="/register" class="text-lg font-bold">Войти</router-link>
+                </div>
+
+                <div v-if="showDropdown" class="absolute mt-2 bg-white shadow-lg rounded-md z-50 w-24">
+                    <ul>
+                        <li v-for="lang in languages" :key="lang" @click.stop="selectLanguage(lang)"
+                            class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                            {{ lang }}
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
@@ -51,6 +62,25 @@
     export default
     {
         name: 'Navbar',
+
+        data() {
+            return {
+                showDropdown: false,
+                selectedLanguage: 'RU',
+                languages: ['RU', 'ENG', 'KAZ'],
+            };
+        },
+        methods: {
+            toggleDropdown() {
+                this.showDropdown = !this.showDropdown;
+            },
+            selectLanguage(lang) {
+                this.selectedLanguage = lang;
+                this.showDropdown = false;
+            },
+        },
+
+
     }
 </script>
 
