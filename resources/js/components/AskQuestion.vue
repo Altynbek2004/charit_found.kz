@@ -4,103 +4,53 @@
             Задайте вопрос нашему чату-помощнику
         </h2>
 
-        <div class="bg-blue-50 rounded-lg p-6 max-w-4xl mx-auto shadow  min-h-[800px] flex flex-col justify-between">
-            <h3 class="text-lg font-bold text-center mb-6">Тут тип чат ИИ мен</h3>
+        <div class="bg-blue-50 rounded-lg p-6 max-w-4xl mx-auto shadow min-h-[800px] flex flex-col justify-between">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">Чат с AI</h3>
+                <button
+                    @click="clearChat"
+                    class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm"
+                    :disabled="messages.length <= 1"
+                >
+                    Очистить чат
+                </button>
+            </div>
 
             <!-- Сообщения -->
-            <div class=" flex-1 overflow-auto space-y-4 mb-6">
-                <!-- Сообщение пользователя -->
-                <div class="bg-gray-200 rounded px-4 py-2 max-w-xs">
-                    Привет! Расскажи про приют.
+            <div class="flex-1 overflow-auto space-y-4 mb-6" ref="messagesContainer">
+                <div v-if="messages.length === 0" class="text-center text-gray-500 italic">
+                    Начните диалог, отправив сообщение
                 </div>
-
-                <!-- Ответ ИИ -->
-                <div class=" bg-blue-200 rounded px-4 py-2 max-w-xs ml-auto">
-                    Конечно! У нас есть много собак и кошек, которых можно приютить.
+                <div v-for="(msg, index) in messages" :key="index"
+                     :class="[
+                        msg.role === 'user' ? 'bg-gray-200 ml-auto' : 'bg-blue-200',
+                        'rounded px-4 py-2 max-w-sm break-words'
+                    ]">
+                    {{ msg.content }}
+                </div>
+                <div v-if="loading" class="bg-blue-200 rounded px-4 py-2 max-w-sm">
+                    <span class="loading-animation">Печатает<span>.</span><span>.</span><span>.</span></span>
                 </div>
             </div>
 
-<!--            <div style="max-height: 300px; overflow-y: auto;">-->
-<!--                <div class="p-3">-->
-
-<!--                    <div v-for="(message, index) in requestClient"-->
-<!--                         :key="index"-->
-<!--                         class="">-->
-<!--                        <div class="d-flex flex-column">-->
-<!--                            <div-->
-<!--                                :class="{ 'text-end': message.direction_id !== 'in', 'me-1': message.direction_id !== 'in' }"-->
-<!--                                class="ps-3">-->
-<!--                                                            <span class="font-weight-bold small">-->
-<!--                                                                {{ message.name }} {{ message.surname }}-->
-<!--                                                            </span>-->
-<!--                            </div>-->
-<!--                            <div v-if="message.direction_id == 'in'"-->
-<!--                                 class="d-flex p-3 pt-0">-->
-<!--                                <div class="avatar avatar-l me-2">-->
-<!--                                    <img alt=""-->
-<!--                                         class="rounded-circle"-->
-<!--                                         src="http://www.gravatar.com/avatar/1e22faa0f24a974c9188289c9e2a74e1.jpg?s=80&d=mm&r=g">-->
-<!--                                </div>-->
-<!--                                <div class="flex-1">-->
-<!--                                    <div class="w-xxl-75">-->
-<!--                                        <div-->
-<!--                                            class="hover-actions-trigger d-flex align-items-center">-->
-<!--                                            <div class="chat-message bg-200 p-2 rounded-2">-->
-<!--                                                {{ message.message }}-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="text-400 fs&#45;&#45;2"><span>{{-->
-<!--                                                $dateFormat(message.date_id, 'full')-->
-<!--                                            }}</span></div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div v-else-->
-<!--                                 class="d-flex p-3 pt-0">-->
-<!--                                <div class="flex-1 d-flex justify-content-end">-->
-<!--                                    <div class="w-100 w-xxl-75">-->
-<!--                                        <div-->
-<!--                                            class="hover-actions-trigger d-flex flex-end-center">-->
-<!--                                            <div-->
-<!--                                                class="bg-primary text-white p-2 rounded-2 chat-message light">-->
-<!--                                                {{ message.message }}-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="text-400 fs&#45;&#45;2 text-end"><span>{{-->
-<!--                                                $dateFormat(message.date_id, 'full')-->
-<!--                                            }}</span></div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="avatar avatar-l me-2 ms-2">-->
-<!--                                    <img alt=""-->
-<!--                                         class="rounded-circle"-->
-<!--                                         src="http://www.gravatar.com/avatar/1e22faa0f24a974c9188289c9e2a74e1.jpg?s=80&d=mm&r=g">-->
-<!--                                </div>-->
-<!--                            </div>-->
-
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--            </div>-->
-
-            <!-- Форма отправки -->
-            <div  class="flex">
+            <form @submit.prevent="sendMessage" class="flex flex-col sm:flex-row w-full">
                 <input
                     type="text"
-                    v-model="message"
+                    v-model="userMessage"
                     placeholder="Введите сообщение..."
-                    class="flex-1 px-4 py-2 rounded-l border-t border-l border-b border-gray-300 focus:outline-none"
+                    class="w-full sm:flex-1 px-4 py-2 rounded-t sm:rounded-l sm:rounded-tr-none border border-gray-300 focus:outline-none"
                     maxlength="255"
+                    :disabled="loading"
                 />
                 <button
                     type="submit"
-                    class="bg-blue-500 text-white px-6 rounded-r hover:bg-blue-600"
-                    @click="sendMessage"
+                    class="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded-b sm:rounded-r sm:rounded-bl-none hover:bg-blue-600 disabled:bg-blue-300 transition"
+                    :disabled="loading || !userMessage.trim()"
                 >
                     Отправить
                 </button>
-            </div>
+            </form>
+
         </div>
     </div>
 </template>
@@ -111,20 +61,142 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            message: '',
+            userMessage: '',
+            messages: [],
+            loading: false,
+            apiKey: 'AIzaSyAALKQv-SwkcGekyP3BvWH4P-XLk49zSJ4', // Замените на свой API-ключ Gemini
+            // Инициализируем новый объект для хранения идентификатора сессии
+            sessionId: null
         };
     },
     methods: {
-        sendMessage() {
-            if (this.message.trim()) {
-                alert(`Сообщение отправлено: ${this.message}`);
-                this.message = '';
+        async sendMessage() {
+            if (!this.userMessage.trim()) return;
+
+            // Добавляем сообщение пользователя в чат
+            const userMessageText = this.userMessage.trim();
+            this.messages.push({ role: 'user', content: userMessageText });
+            this.userMessage = '';
+            this.loading = true;
+
+            try {
+                let response;
+
+                // Если сессии еще нет, создаем новую сессию
+                if (!this.sessionId) {
+                    // Создаем новую сессию чата с Gemini
+                    response = await axios.post(
+                        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`,
+                        {
+                            contents: [{
+                                role: "user",
+                                parts: [{ text: userMessageText }]
+                            }],
+                            generationConfig: {
+                                temperature: 0.7,
+                                maxOutputTokens: 1000,
+                            }
+                        },
+                        {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+                } else {
+                    // Отправляем сообщение в существующую сессию
+                    response = await axios.post(
+                        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent?key=${this.apiKey}`,
+                        {
+                            contents: [{
+                                role: "user",
+                                parts: [{ text: userMessageText }]
+                            }],
+                            generationConfig: {
+                                temperature: 0.7,
+                                maxOutputTokens: 1000,
+                            }
+                        },
+                        {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+                }
+
+                // Обработка ответа
+                if (response.data &&
+                    response.data.candidates &&
+                    response.data.candidates.length > 0 &&
+                    response.data.candidates[0].content &&
+                    response.data.candidates[0].content.parts &&
+                    response.data.candidates[0].content.parts.length > 0) {
+
+                    const aiResponse = response.data.candidates[0].content.parts[0].text;
+                    this.messages.push({ role: 'assistant', content: aiResponse });
+
+                } else {
+                    throw new Error('Некорректный формат ответа API');
+                }
+            } catch (error) {
+                console.error('Ошибка при отправке запроса:', error);
+                this.messages.push({
+                    role: 'assistant',
+                    content: 'Извините, произошла ошибка при обработке вашего запроса. Пожалуйста, попробуйте еще раз позже.'
+                });
+            } finally {
+                this.loading = false;
+                this.$nextTick(() => {
+                    this.scrollToBottom();
+                });
             }
         },
+        scrollToBottom() {
+            if (this.$refs.messagesContainer) {
+                this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
+            }
+        },
+        clearChat() {
+            // Оставляем только приветственное сообщение
+            this.messages = [{
+                role: 'assistant',
+                content: 'Здравствуйте! Я ваш личный ИИ-помощник. Задайте ваш вопрос о приюте или другой интересующей вас теме.'
+            }];
+            // Сбрасываем идентификатор сессии, чтобы создать новую
+            this.sessionId = null;
+        }
     },
+    mounted() {
+        // Приветственное сообщение при загрузке чата
+        const welcomeMessage = 'Здравствуйте! Я ваш личный ИИ-помощник. Задайте ваш вопрос о приюте или другой интересующей вас теме.';
+        this.messages.push({
+            role: 'assistant',
+            content: welcomeMessage
+        });
+    },
+    updated() {
+        this.scrollToBottom();
+    }
 };
 </script>
 
 <style scoped>
-
+.loading-animation span {
+    animation: dots 1.5s infinite;
+    opacity: 0;
+}
+.loading-animation span:nth-child(1) {
+    animation-delay: 0s;
+}
+.loading-animation span:nth-child(2) {
+    animation-delay: 0.5s;
+}
+.loading-animation span:nth-child(3) {
+    animation-delay: 1s;
+}
+@keyframes dots {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
 </style>
