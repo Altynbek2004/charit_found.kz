@@ -9,26 +9,47 @@
     </section>
 
 
-    <div class="text-center text-2xl font-bold mt-6 mb-4"><h1>Приют “Амиго”</h1></div>
+    <div class="text-center mt-8 mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Приют "Амиго"</h1>
+        <div class="h-1 w-24 bg-blue-500 mx-auto mt-2"></div>
+    </div>
 
-    <section class="py-4">
-        <div class="container mx-auto max-w-screen-xl flex justify-between items-center px-4">
-            <div class="flex flex-col md:flex-row items-center md:items-end gap-8">
-                <div class="w-full md:w-1/2 flex justify-center">
-                    <img src="/storage/app/public/imageMenu/amigo.png" alt="Amigo logo"
-                         class="w-full h-auto object-contain border-none" />
+    <section class="py-6 bg-gray-50">
+        <div class="container mx-auto max-w-screen-xl px-4">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full md:w-2/5">
+                    <div class="rounded-lg overflow-hidden shadow-lg">
+                        <img src="/storage/app/public/imageMenu/amigo.png" alt="Логотип приюта Амиго"
+                             class="w-full h-auto object-cover" />
+                    </div>
                 </div>
 
-                <div class="w-full md:w-1/2 flex flex-col justify-end space-y-2 text-center md:text-left">
-                    <p>описание</p>
-                    <p>описание</p>
-                    <p>описание</p>
-                    <p>описание</p>
-                    <p>описание</p>
+                <div class="w-full md:w-3/5">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">О приюте "Амиго"</h2>
+
+                    <div class="text-gray-600 space-y-4 text-lg">
+                        <p>Приют "Амиго" — это больше, чем просто временное убежище. Это место, где каждый найденный, потерянный или покинутый хвостик обретает надежду, заботу и настоящего друга.</p>
+
+                        <p>Мы верим, что каждое животное заслуживает любви и второй шанс. В нашем приюте мы не просто кормим и лечим — мы стараемся подарить тепло, ласку и шанс на новую, счастливую жизнь в семье.</p>
+
+                        <p>Наша команда — это волонтёры, ветеринары и просто неравнодушные люди, объединённые одной целью: помогать тем, кто не может попросить о помощи словами, но нуждается в ней всем сердцем.</p>
+
+                        <p>Если вы ищете верного друга, хотите помочь или просто поддержать добрым словом — вы всегда желанный гость в "Амиго".</p>
+
+                        <p class="font-semibold text-blue-600 italic">"Амиго" — приют, где начинается дружба.</p>
+                    </div>
+
+                    <div class="mt-6">
+                        <a href="#contact" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-full transition-colors duration-300">
+                            Связаться с нами
+                        </a>
+                        <a href="#help" class="inline-block bg-white border border-blue-500 hover:bg-blue-50 text-blue-500 font-medium py-2 px-6 rounded-full ml-4 transition-colors duration-300">
+                            Как помочь
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-
     </section>
 
 
