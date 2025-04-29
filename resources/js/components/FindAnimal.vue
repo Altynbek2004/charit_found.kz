@@ -43,19 +43,31 @@
             <div class="max-w-3xl mx-auto mb-10">
                 <h3 class="text-2xl font-semibold text-center mb-6">Недавние объявления</h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div v-for="(pet, index) in recentPets" :key="index" class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div v-if="loading" class="text-center py-8">
+                    <p>Загрузка объявлений...</p>
+                </div>
+
+                <div v-else-if="recentPets.length === 0" class="text-center py-8">
+                    <p>Пока нет объявлений о найденных животных</p>
+                </div>
+
+                <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div v-for="pet in recentPets" :key="pet.id" class="bg-white rounded-lg shadow-md overflow-hidden">
                         <div class="h-48 bg-gray-200 flex items-center justify-center">
                             <img
-                                :src="pet.image"
-                                :alt="pet.type"
+                                v-if="pet.photoUrl"
+                                :src="pet.photoUrl"
+                                :alt="getPetTypeText(pet)"
                                 class="h-full w-full object-cover"
                             />
+                            <div v-else class="flex items-center justify-center h-full w-full">
+                                <span class="text-gray-400">Нет фото</span>
+                            </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="text-lg font-medium">{{ pet.type }}</h4>
+                            <h4 class="text-lg font-medium">{{ getPetTypeText(pet) }}</h4>
                             <p class="text-sm text-gray-600">{{ pet.location }}</p>
-                            <p class="text-sm text-gray-600">{{ pet.date }}</p>
+                            <p class="text-sm text-gray-600">{{ formatDate(pet.foundDate) }}</p>
                             <button
                                 class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                                 @click="viewDetails(pet.id)"
@@ -303,29 +315,9 @@ export default {
             showSuccess: false,
             submitting: false,
             imagePreview: null,
-            recentPets: [
-                {
-                    id: 1,
-                    type: 'Кошка (британская)',
-                    location: 'Москва, Сокольники',
-                    date: '05.04.2025',
-                    image: '/storage/app/public/images/dogs.png'
-                },
-                {
-                    id: 2,
-                    type: 'Собака (лабрадор)',
-                    location: 'Санкт-Петербург, Невский район',
-                    date: '03.04.2025',
-                    image: '/api/placeholder/300/200'
-                },
-                {
-                    id: 3,
-                    type: 'Попугай',
-                    location: 'Екатеринбург, центр',
-                    date: '01.04.2025',
-                    image: '/api/placeholder/300/200'
-                }
-            ],
+            loading: true,
+            error: null,
+            recentPets: [],
             form: {
                 petType: '',
                 otherPetType: '',
@@ -342,55 +334,135 @@ export default {
             }
         }
     },
+    mounted() {
+        this.fetchRecentPets();
+    },
     methods: {
+        submitForm() {
+            console.log(22222);
+            this.submitting = true;
+
+            // Create FormData for file upload
+            const formData = new FormData();
+            formData.append('petType', this.form.petType);
+            formData.append('otherPetType', this.form.otherPetType);
+            formData.append('breed', this.form.breed);
+            formData.append('gender', this.form.gender);
+            formData.append('age', this.form.age);
+            formData.append('location', this.form.location);
+            formData.append('date', this.form.date);
+            formData.append('description', this.form.description);
+
+            if (this.form.photo) {
+                formData.append('photo', this.form.photo);
+            }
+
+            formData.append('contactName', this.form.contactName);
+            formData.append('contactPhone', this.form.contactPhone);
+            formData.append('contactEmail', this.form.contactEmail);
+
+            // Send data to Laravel backend
+            axios.post('/api/found-pets', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(response => {
+                    console.log('Form submitted successfully:', response.data);
+                    this.submitting = false;
+                    this.showAddForm = false;
+                    this.showSuccess = true;
+
+                    // Reset form data
+                    this.form = {
+                        petType: '',
+                        otherPetType: '',
+                        breed: '',
+                        gender: '',
+                        age: '',
+                        location: '',
+                        date: '',
+                        description: '',
+                        photo: null,
+                        contactName: '',
+                        contactPhone: '',
+                        contactEmail: ''
+                    };
+                    this.imagePreview = null;
+                    if (this.$refs.fileInput) {
+                        this.$refs.fileInput.value = '';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error submitting form:', error.response ? error.response.data : error);
+                    this.submitting = false;
+                    // Handle validation errors
+                    if (error.response && error.response.status === 422) {
+                        // You can handle validation errors here
+                        this.errors = error.response.data.errors;
+                    } else {
+                        // Handle other errors
+                        alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже.');
+                    }
+                });
+        },
+
+// Add this method to handle file upload
         handleFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
                 this.form.photo = file;
-                this.imagePreview = URL.createObjectURL(file);
-            }
-        },
-        submitForm() {
-            this.submitting = true;
-
-            // Имитация отправки данных на сервер
-            setTimeout(() => {
-                console.log('Form submitted:', this.form);
-
-                // Сброс формы
-                this.submitting = false;
-                this.showAddForm = false;
-                this.showSuccess = true;
-
-                // Сброс данных формы
-                this.form = {
-                    petType: '',
-                    otherPetType: '',
-                    breed: '',
-                    gender: '',
-                    age: '',
-                    location: '',
-                    date: '',
-                    description: '',
-                    photo: null,
-                    contactName: '',
-                    contactPhone: '',
-                    contactEmail: ''
+                // Create image preview
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.imagePreview = e.target.result;
                 };
-                this.imagePreview = null;
-                if (this.$refs.fileInput) {
-                    this.$refs.fileInput.value = '';
-                }
-            }, 1500);
+                reader.readAsDataURL(file);
+            }
         },
         closeSuccess() {
             this.showSuccess = false;
         },
+        fetchRecentPets() {
+            this.loading = true;
+
+            axios.get('/api/recent-pets')
+                .then(response => {
+                    this.recentPets = response.data.data;
+                    this.loading = false;
+                })
+                .catch(error => {
+                    console.error('Error fetching recent pets:', error);
+                    this.error = 'Не удалось загрузить объявления';
+                    this.loading = false;
+                });
+        },
+
+        getPetTypeText(pet) {
+            if (pet.petType === 'other' && pet.otherPetType) {
+                return pet.otherPetType;
+            }
+
+            const petTypes = {
+                'cat': 'Кошка',
+                'dog': 'Собака',
+                'bird': 'Птица',
+                'other': 'Другое животное'
+            };
+
+            return petTypes[pet.petType] || 'Животное';
+        },
+
+        formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('ru-RU', options);
+        },
+
         viewDetails(petId) {
-            // Здесь будет логика просмотра деталей объявления
-            console.log('View details for pet ID:', petId);
-            // В реальном приложении здесь может быть перенаправление на страницу с деталями
-            // this.$router.push(`/pet/${petId}`);
+            // Navigate to pet details page
+            this.$router.push({ name: 'pet-details', params: { id: petId } });
+            // If you're not using Vue Router, you can use window.location instead:
+            // window.location.href = `/pets/${petId}`;
         }
     }
 }
