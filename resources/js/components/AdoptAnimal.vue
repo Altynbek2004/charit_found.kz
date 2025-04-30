@@ -21,179 +21,135 @@
             </button>
         </div>
         <div v-bind:class="{'active' : activeTab == 'Собаки'}" v-if="activeTab === 'Собаки'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    Page Собаки
-                </p>
+            <div v-if="loading" class="text-center py-8">
+                <p>Загрузка объявлений...</p>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+            <div v-else-if="recentPetsDog.length === 0" class="text-center py-8">
+                <p>Пока нет объявлений о найденных животных</p>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
+            <div v-else v-for="pet in recentPetsDog" :key="pet.id"
             >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+                <div v-if="pet.petType ==='dog'" class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300">
+                    <div>
+                        <img v-if="pet.photoUrl"
+                             :src="pet.photoUrl"
+                             :alt="getPetTypeTextAdopt(pet)"
+                             class="w-full h-48 object-cover rounded-md mb-3" />
+                        <div v-else class="flex items-center justify-center h-full w-full">
+                            <span class="text-gray-400">Нет фото</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
+                        <p class="text-sm text-gray-600">{{ pet.location }}</p>
+                        <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
+                        <button
+                            class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                            @click="viewDetailsAdopt(pet.id)"
+                        >
+                            Подробнее
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <div v-bind:class="{'active' : activeTab == 'Кошки'}" v-if="activeTab === 'Кошки'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    Page Кошки
-                </p>
+            <div v-if="loading" class="text-center py-8">
+                <p>Загрузка объявлений...</p>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+            <div v-else-if="recentPetsCat.length === 0" class="text-center py-8">
+                <p>Пока нет объявлений о найденных животных</p>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
+            <div v-else v-for="pet in recentPetsCat" :key="pet.id"
             >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+                <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300">
+                    <div>
+                        <img v-if="pet.photoUrl"
+                             :src="pet.photoUrl"
+                             :alt="getPetTypeTextAdopt(pet)"
+                             class="w-full h-48 object-cover rounded-md mb-3" />
+                        <div v-else class="flex items-center justify-center h-full w-full">
+                            <span class="text-gray-400">Нет фото</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
+                        <p class="text-sm text-gray-600">{{ pet.location }}</p>
+                        <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
+                        <button
+                            class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                            @click="viewDetailsAdopt(pet.id)"
+                        >
+                            Подробнее
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+        </div>
+        <div v-bind:class="{'active' : activeTab == 'Птицы'}" v-if="activeTab === 'Птицы'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div v-if="loading" class="text-center py-8">
+                <p>Загрузка объявлений...</p>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+            <div v-else-if="recentPetsBird.length === 0" class="text-center py-8">
+                <p>Пока нет объявлений о найденных животных</p>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
+            <div v-else v-for="pet in recentPetsBird" :key="pet.id"
             >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+                <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300">
+                    <div>
+                        <img v-if="pet.photoUrl"
+                             :src="pet.photoUrl"
+                             :alt="getPetTypeTextAdopt(pet)"
+                             class="w-full h-48 object-cover rounded-md mb-3" />
+                        <div v-else class="flex items-center justify-center h-full w-full">
+                            <span class="text-gray-400">Нет фото</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
+                        <p class="text-sm text-gray-600">{{ pet.location }}</p>
+                        <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
+                        <button
+                            class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                            @click="viewDetailsAdopt(pet.id)"
+                        >
+                            Подробнее
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <div v-bind:class="{'active' : activeTab == 'Другие'}" v-if="activeTab === 'Другие'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                   Page Другие
-                </p>
+            <div v-if="loading" class="text-center py-8">
+                <p>Загрузка объявлений...</p>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+            <div v-else-if="recentPetsOther.length === 0" class="text-center py-8">
+                <p>Пока нет объявлений о найденных животных</p>
             </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
+            <div v-else v-for="pet in recentPetsOther" :key="pet.id"
             >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-        </div>
-        <div v-bind:class="{'active' : activeTab == 'Временно'}" v-if="activeTab === 'Временно'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    Page Временно
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
-            </div>
-            <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
-            >
-                <img src="/storage/app/public/images/dogs.png" alt="dog" class="w-full h-48 object-cover rounded-md mb-3" />
-                <p class="text-sm break-words">
-                    йцукенгшщзхъфывапролдячсмитьбю№йцукенгшщзхъфывапролдячсмитьбю
-                </p>
+                <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300">
+                    <div>
+                        <img v-if="pet.photoUrl"
+                             :src="pet.photoUrl"
+                             :alt="getPetTypeTextAdopt(pet)"
+                             class="w-full h-48 object-cover rounded-md mb-3" />
+                        <div v-else class="flex items-center justify-center h-full w-full">
+                            <span class="text-gray-400">Нет фото</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
+                        <p class="text-sm text-gray-600">{{ pet.location }}</p>
+                        <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
+                        <button
+                            class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                            @click="viewDetailsAdopt(pet.id)"
+                        >
+                            Подробнее
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="flex justify-center mt-8">
@@ -406,6 +362,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            loading: true,
             showAddFormAdopt:false,
             submittingAdopt:false,
             showSuccessAdopt:false,
@@ -424,13 +381,19 @@ export default {
                 contactPhone: '',
                 contactEmail: ''
             },
-            tabs: ['Собаки', 'Кошки', 'Другие', 'Временно'],
+            recentPetsDog: [],
+            recentPetsCat: [],
+            recentPetsBird: [],
+            recentPetsOther: [],
+            tabs: ['Собаки', 'Кошки', 'Птицы', 'Другие'],
             activeTab: 'Собаки'
         }
     },
+    mounted() {
+        this.fetchRecentPetsAdopt();
+    },
     methods: {
         submitFormAdopt() {
-            console.log(22222);
             this.submittingAdopt = true;
 
             // Create FormData for file upload
@@ -441,8 +404,8 @@ export default {
             formData.append('gender', this.formAdopt.gender);
             formData.append('age', this.formAdopt.age);
             formData.append('location', this.formAdopt.location);
-            formData.append('date', this.formAdopt.date);
             formData.append('description', this.formAdopt.description);
+            formData.append('namePet', this.formAdopt.namePet);
 
             if (this.formAdopt.photo) {
                 formData.append('photo', this.formAdopt.photo);
@@ -466,19 +429,20 @@ export default {
 
                     // Reset form data
                     this.formAdopt = {
+                        namePet: '',
                         petType: '',
                         otherPetType: '',
                         breed: '',
                         gender: '',
                         age: '',
                         location: '',
-                        date: '',
                         description: '',
                         photo: null,
                         contactName: '',
                         contactPhone: '',
                         contactEmail: ''
                     };
+                    this.fetchRecentPetsAdopt();
                     this.imagePreviewAdopt = null;
                     if (this.$refs.fileInput) {
                         this.$refs.fileInput.value = '';
@@ -519,7 +483,10 @@ export default {
 
             axios.get('/api/adopt-recent-pets')
                 .then(response => {
-                    this.recentPets = response.data.data;
+                    this.recentPetsDog = response.data.recentPetsDog;
+                    this.recentPetsCat = response.data.recentPetsCat;
+                    this.recentPetsBird = response.data.recentPetsBird;
+                    this.recentPetsOther = response.data.recentPetsOther;
                     this.loading = false;
                 })
                 .catch(error => {
@@ -551,7 +518,7 @@ export default {
 
         viewDetailsAdopt(petId) {
             // Navigate to pet details page
-            this.$router.push({ name: 'pet-details', params: { id: petId } });
+            this.$router.push({ name: 'adopt-pet-details', params: { id: petId } });
             // If you're not using Vue Router, you can use window.location instead:
             // window.location.href = `/pets/${petId}`;
         }

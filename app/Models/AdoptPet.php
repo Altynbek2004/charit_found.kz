@@ -16,6 +16,7 @@ class AdoptPet extends Model
      */
     protected $fillable = [
         'pet_type',
+        'pet_name',
         'other_pet_type',
         'breed',
         'gender',

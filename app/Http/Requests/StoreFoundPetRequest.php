@@ -30,7 +30,7 @@ class StoreFoundPetRequest extends FormRequest
             'location' => 'required|string',
             'date' => 'required|date',
             'description' => 'nullable|string',
-            'photo' => 'nullable|image|max:2048', // Max 2MB
+            'photo' => 'nullable|image|max:20480', // Max 20MB
             'contactName' => 'required|string',
             'contactPhone' => 'required|string',
             'contactEmail' => 'nullable|email',
