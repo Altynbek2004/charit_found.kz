@@ -70,9 +70,22 @@ class AdoptPetController extends Controller
     {
         // Get the most recent pets (default limit is 6)
         $limit = $request->query('limit', 6);
-        $recentPets = AdoptPet::latest()->take($limit)->get();
+        $recentPetsDog = AdoptPet::where('pet_type','dog')->latest()->take($limit)->get();
+        $recentPetsCat = AdoptPet::where('pet_type','cat')->latest()->take($limit)->get();
+        $recentPetsBird = AdoptPet::where('pet_type','bird')->latest()->take($limit)->get();
+        $recentPetsOther = AdoptPet::where('pet_type','other')->latest()->take($limit)->get();
 
-        return AdoptPetResource::collection($recentPets);
+        $recentPetsDog=  AdoptPetResource::collection($recentPetsDog);
+        $recentPetsCat=  AdoptPetResource::collection($recentPetsCat);
+        $recentPetsBird=  AdoptPetResource::collection($recentPetsBird);
+        $recentPetsOther=  AdoptPetResource::collection($recentPetsOther);
+
+        return  [
+        'recentPetsDog' => $recentPetsDog,
+        'recentPetsCat' => $recentPetsCat,
+        'recentPetsBird' => $recentPetsBird,
+        'recentPetsOther' => $recentPetsOther,
+        ];
     }
 
     /**
@@ -92,7 +105,7 @@ class AdoptPetController extends Controller
             'location' => 'required|string',
             'namePet' => 'required|string',
             'description' => 'nullable|string',
-            'photo' => 'nullable|image|max:2048', // Max 2MB
+            'photo' => 'nullable|image|max:20480', // Max 20MB
             'contactName' => 'required|string',
             'contactPhone' => 'required|string',
             'contactEmail' => 'nullable|email',

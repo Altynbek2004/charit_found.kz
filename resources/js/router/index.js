@@ -6,6 +6,7 @@ import HomePage from "../components/HomePage.vue";
 import Pets from "../components/Pets.vue";
 import AdoptAnimal from '../components/AdoptAnimal.vue';
 import PetDetailsPage from '../components/PetDetailsPage.vue';
+import AdoptPetDetailsPage from '../components/AdoptPetDetailsPage.vue';
 import Navbar from "../components/Navbar.vue";
 
 const routes = [
@@ -21,6 +22,12 @@ const routes = [
         path: '/pets/:id',
         name: 'pet-details',
         component: PetDetailsPage,
+        props: true
+    },
+    {
+        path: '/adopt-pets/:id',
+        name: 'adopt-pet-details',
+        component: AdoptPetDetailsPage,
         props: true
     },
     {

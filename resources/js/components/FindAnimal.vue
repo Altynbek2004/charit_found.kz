@@ -392,6 +392,7 @@ export default {
                     if (this.$refs.fileInput) {
                         this.$refs.fileInput.value = '';
                     }
+                    this.fetchRecentPets();
                 })
                 .catch(error => {
                     console.error('Error submitting form:', error.response ? error.response.data : error);
