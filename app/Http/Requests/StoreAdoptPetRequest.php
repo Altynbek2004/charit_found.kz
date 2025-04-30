@@ -28,9 +28,8 @@ class StoreAdoptPetRequest extends FormRequest
             'gender' => 'nullable|string',
             'age' => 'nullable|string',
             'location' => 'required|string',
-            'date' => 'required|date',
             'description' => 'nullable|string',
-            'photo' => 'nullable|image|max:2048', // Max 2MB
+            'photo' => 'nullable|image|max:20480', // Max 20MB
             'contactName' => 'required|string',
             'contactPhone' => 'required|string',
             'contactEmail' => 'nullable|email',
@@ -53,7 +52,7 @@ class StoreAdoptPetRequest extends FormRequest
             'contactPhone.required' => 'Укажите ваш телефон',
             'contactEmail.email' => 'Укажите корректный email',
             'photo.image' => 'Загружаемый файл должен быть изображением',
-            'photo.max' => 'Максимальный размер файла - 2MB',
+            'photo.max' => 'Максимальный размер файла - 4MB',
         ];
     }
 }
