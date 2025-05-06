@@ -9,7 +9,7 @@
 
         <!-- Main Content -->
         <main class="flex-grow container mx-auto py-8 px-6">
-            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <div class="max-w-[1150px] mx-auto bg-white rounded-lg shadow-md p-8">
                 <!-- Contact Form -->
                 <form @submit.prevent="submitForm" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="">
                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
                         <input
                             type="tel"
@@ -91,7 +91,8 @@
             </div>
 
             <!-- Contact Information -->
-            <div class="max-w-3xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="max-w-6xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white p-6 rounded-lg shadow-md text-center">
                     <div class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-500 rounded-full mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -123,6 +124,10 @@
                     <p>г. Алматы, ул. Абая, д. 123</p>
                 </div>
             </div>
+
+
+
+
         </main>
 
     </div>
