@@ -17,7 +17,7 @@
             </div>
 
             <!-- Сообщения -->
-            <div class="flex-1 overflow-auto space-y-4 mb-6" ref="messagesContainer">
+            <div class="overflow-y-auto h-[600px] space-y-4 mb-6" ref="messagesContainer">
                 <div v-if="messages.length === 0" class="text-center text-gray-500 italic">
                     Начните диалог, отправив сообщение
                 </div>
