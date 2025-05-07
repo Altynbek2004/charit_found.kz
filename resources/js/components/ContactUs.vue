@@ -125,9 +125,6 @@
                 </div>
             </div>
 
-
-
-
         </main>
 
     </div>
@@ -162,23 +159,28 @@ export default {
                 // Здесь можно добавить код для отправки данных на сервер
                 console.log('Form submitted:', this.form);
 
-                // Сброс формы и установка флага успешной отправки
-                this.submitting = false;
-                this.submitted = true;
 
-                // Сброс формы
-                this.form = {
-                    name: '',
-                    email: '',
-                    phone: '',
-                    subject: '',
-                    message: ''
-                };
+                const params = this.form;
+                axios.post('/contact-us/mail', params).then(response => {
+                    // Сброс формы и установка флага успешной отправки
+                    this.submitting = false;
+                    this.submitted = true;
 
-                // Сброс флага успешной отправки через некоторое время
-                setTimeout(() => {
-                    this.submitted = false;
-                }, 5000);
+                    // Сброс формы
+                    this.form = {
+                        name: '',
+                        email: '',
+                        phone: '',
+                        subject: '',
+                        message: ''
+                    };
+                    if (response.data.success) {
+                        setTimeout(() => {
+                            this.submitted = false;
+                        }, 5000);
+                    }
+                });
+
             }, 1500);
         }
     }

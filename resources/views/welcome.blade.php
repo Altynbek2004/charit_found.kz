@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Vue Laravel App</title>
+    <title>Adoptly</title>
+
+    <link rel="icon" type="image/png" href="/storage/imageMenu/logo_chari_found.png" />
+
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

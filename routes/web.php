@@ -23,3 +23,4 @@ Route::get('/{any}', function () {
 
 Route::get('/register',[RegisterController::class,'registerForm'])->name('register.form');
 Route::post('/register', [RegisterController::class, 'registerStore'])->name('register.store');
+Route::post('/contact-us/mail', [MailController::class, 'sendMail'])->name('sendMail');

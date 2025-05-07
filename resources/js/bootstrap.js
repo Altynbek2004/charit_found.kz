@@ -8,16 +8,19 @@ import axios from 'axios';
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-
+import i18n from './i18n';
 
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
 // Инициализация Vue и подключение маршрутизации
-const app = createApp(App);
-app.use(router);
-app.mount('#app');
+const app = createApp(App)
+
+app.use(router)
+app.use(i18n)
+
+app.mount('#app')
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

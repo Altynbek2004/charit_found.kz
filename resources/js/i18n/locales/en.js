@@ -1,0 +1,82 @@
+// src/i18n/locales/en.js
+export default {
+    header: {
+        contacts: '+7 775 593 88 08',
+        email: 'email',
+        find: 'Found an animal?',
+        help: 'We will help him find a home!',
+    },
+    nav: {
+        home: 'Home',
+        about: 'About Us',
+        pets: 'Pets',
+        assistant: 'Chat Assistant',
+        login: 'Login'
+    },
+    shelter: {
+        name: 'Amigo Shelter',
+        aboutTitle: 'About "Amigo" Shelter',
+        description1: 'Amigo Shelter is more than just a temporary refuge. It\'s a place where every found, lost, or abandoned pet finds hope, care, and a true friend.',
+        description2: 'We believe that every animal deserves love and a second chance. In our shelter, we don\'t just feed and treat them - we try to give warmth, affection, and a chance for a new, happy life in a family.',
+        description3: 'Our team consists of volunteers, veterinarians, and simply caring people united by one goal: to help those who cannot ask for help with words but need it with all their hearts.',
+        description4: 'If you are looking for a loyal friend, want to help, or just support with a kind word - you are always a welcome guest at "Amigo".',
+        motto: '"Amigo" - a shelter where friendship begins.'
+    },
+    buttons: {
+        contact: 'Contact Us',
+        help: 'How to Help'
+    },
+    main: {
+        context: 'If you have found a stray animal, you can post an announcement on our website.\n' +
+            'We will help find new owners or reunite the pet with its previous ones.',
+        works: 'How it works:',
+        work1: 'Add information about the found animal',
+        work2: 'Upload a photo of the pet',
+        work3: 'Provide contact details',
+        work4: 'We will publish your announcement',
+        important: 'What’s important to mention:',
+        important1: 'Species and breed (if known)',
+        important2: 'Gender and approximate age',
+        important3: 'Distinctive features',
+        important4: 'Place and date the animal was found',
+        important5: 'Health condition',
+    },
+    recent: {
+        recentAnAd: 'Recent Announcements',
+        loading: 'Loading announcements...',
+        endLoading: 'No announcements about found animals yet',
+        noPhoto: 'No photo',
+        more: 'More details',
+        addAnAd: 'Add Announcement',
+        typePet: 'Type of Animal*',
+        choosePet: 'Choose the type of animal',
+        cat: 'Cat',
+        dog: 'Dog',
+        bird: 'Bird',
+        other: 'Other',
+        specifyPet: 'Specify the type of animal*',
+        breed: 'Breed (if known)',
+        gender: 'Gender',
+        chooseGender: 'Choose gender',
+        gender1: 'Male',
+        gender2: 'Female',
+        gender3: 'Undefined',
+        age: 'Approximate Age',
+        location: 'Place Found*',
+        date: 'Date Found*',
+        description: 'Description',
+        photoPet: 'Photo of the Animal',
+        contactName: 'Your Name*',
+        contactPhone: 'Phone Number*',
+        contactEmail: 'Email Address',
+        sending: 'Sending...',
+        postAnAd: 'Post Announcement',
+        thanks: 'Thank You!',
+        postedSuccess: 'Your announcement has been successfully published',
+        agePlaceholder: 'For example: 2 years',
+        locationPlaceholder: 'City, district, street',
+        descriptionPlaceholder: 'Distinctive features, health condition, behavior, etc.',
+        close: 'Close',
+    }
+
+};
