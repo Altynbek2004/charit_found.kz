@@ -90,7 +90,7 @@
         </main>
 
         <!-- Add Form Modal -->
-        <div v-if="showAddForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div v-if="showAddForm" class="fixed inset-0 backdrop-blur-sm backdrop-brightness-75 flex items-center justify-center p-4 z-50">
             <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-6">
@@ -104,7 +104,6 @@
                             </svg>
                         </button>
                     </div>
-
                     <form @submit.prevent="submitForm" class="space-y-4">
                         <!-- Pet Info -->
                         <div>
@@ -122,7 +121,6 @@
                                 <option value="other">{{ $t('recent.other') }}</option>
                             </select>
                         </div>
-
                         <div v-if="form.petType === 'other'">
                             <label for="otherPetType" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.specifyPet') }}</label>
                             <input
@@ -133,7 +131,6 @@
                                 required
                             />
                         </div>
-
                         <div>
                             <label for="breed" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.breed') }}</label>
                             <input
@@ -143,7 +140,6 @@
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                             />
                         </div>
-
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.gender') }}</label>
@@ -170,7 +166,6 @@
                                 />
                             </div>
                         </div>
-
                         <!-- Location Info -->
                         <div>
                             <label for="location" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.location') }}</label>
@@ -183,7 +178,6 @@
                                 :placeholder="$t('recent.locationPlaceholder')"
                             />
                         </div>
-
                         <div>
                             <label for="date" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.date') }}</label>
                             <input
@@ -194,7 +188,6 @@
                                 required
                             />
                         </div>
-
                         <!-- Description -->
                         <div>
                             <label for="description" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.description') }}</label>
@@ -206,7 +199,6 @@
                                 :placeholder="$t('recent.descriptionPlaceholder')"
                             ></textarea>
                         </div>
-
                         <!-- Photo Upload -->
                         <div>
                             <label for="photo" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.photoPet') }}</label>
@@ -222,7 +214,6 @@
                                 <img :src="imagePreview" alt="Preview" class="h-40 object-contain" />
                             </div>
                         </div>
-
                         <!-- Contact Info -->
                         <div>
                             <label for="contactName" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.contactName') }}</label>
@@ -234,7 +225,6 @@
                                 required
                             />
                         </div>
-
                         <div>
                             <label for="contactPhone" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.contactPhone') }}</label>
                             <input
@@ -245,7 +235,6 @@
                                 required
                             />
                         </div>
-
                         <div>
                             <label for="contactEmail" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.contactEmail') }}</label>
                             <input
@@ -255,7 +244,6 @@
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                             />
                         </div>
-
                         <!-- Submit Button -->
                         <div class="mt-6">
                             <button

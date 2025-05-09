@@ -24,7 +24,6 @@
             <!-- Лого -->
             <div class="flex items-center gap-4">
                 <img src="/storage/app/public/imageMenu/logo_chari_found.png" alt="Logo" class="h-16" />
-                <span class="text-xl font-semibold whitespace-nowrap">Flowbite</span>
             </div>
 
             <ul class="hidden md:flex space-x-6 font-bold">

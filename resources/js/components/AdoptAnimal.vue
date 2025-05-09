@@ -2,14 +2,16 @@
     <div class="max-w-5xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center mb-6">Приютить животное</h1>
 
+        <!-- Это тот кнопка которые отвечает за открываение модальное окно-->
         <div
             @click="showAddFormAdopt = true"
             class="flex justify-end mb-4">
             <button class="bg-blue-100 text-blue-900 font-semibold px-4 py-2 rounded shadow">
-                добавить объявление
+                Добавить объявление
             </button>
         </div>
 
+        <!-- это означаеть перемено таб -->
         <div class="flex justify-center space-x-8 border-b mb-8">
             <button
                 v-for="(tab, index) in tabs"
@@ -24,7 +26,7 @@
             <div v-if="loading" class="text-center py-8">
                 <p>Загрузка объявлений...</p>
             </div>
-            <div v-else-if="recentPetsDog.length === 0" class="text-center py-8">
+            <div v-else-if="recentPetsDog.length === 0" class="text-center py-8 justify-center items-center">
                 <p>Пока нет объявлений о найденных животных</p>
             </div>
             <div v-else v-for="pet in recentPetsDog" :key="pet.id"
@@ -57,7 +59,7 @@
             <div v-if="loading" class="text-center py-8">
                 <p>Загрузка объявлений...</p>
             </div>
-            <div v-else-if="recentPetsCat.length === 0" class="text-center py-8">
+            <div v-else-if="recentPetsCat.length === 0" class="text-center py-8 justify-center items-center">
                 <p>Пока нет объявлений о найденных животных</p>
             </div>
             <div v-else v-for="pet in recentPetsCat" :key="pet.id"
@@ -90,7 +92,7 @@
             <div v-if="loading" class="text-center py-8">
                 <p>Загрузка объявлений...</p>
             </div>
-            <div v-else-if="recentPetsBird.length === 0" class="text-center py-8">
+            <div v-else-if="recentPetsBird.length === 0" class="text-center py-8 justify-center items-center">
                 <p>Пока нет объявлений о найденных животных</p>
             </div>
             <div v-else v-for="pet in recentPetsBird" :key="pet.id"
@@ -123,7 +125,7 @@
             <div v-if="loading" class="text-center py-8">
                 <p>Загрузка объявлений...</p>
             </div>
-            <div v-else-if="recentPetsOther.length === 0" class="text-center py-8">
+            <div v-else-if="recentPetsOther.length === 0" class="text-center py-8 justify-center items-center">
                 <p>Пока нет объявлений о найденных животных</p>
             </div>
             <div v-else v-for="pet in recentPetsOther" :key="pet.id"
@@ -159,7 +161,7 @@
         </div>
     </div>
 
-    <div v-if="showAddFormAdopt" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div v-if="showAddFormAdopt" class="fixed inset-0 backdrop-blur-sm backdrop-brightness-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
@@ -173,7 +175,7 @@
                         </svg>
                     </button>
                 </div>
-
+                <!-- Это форма которые открывает как модальное окно но его щас надо изменить -->
                 <form @submit.prevent="submitFormAdopt" class="space-y-4">
                     <!-- Pet Info -->
                     <div>
@@ -337,7 +339,8 @@
         </div>
     </div>
 
-    <div v-if="showSuccessAdopt" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+<!--    После создание животное выходить сообщение таким так Успешно -->
+    <div v-if="showSuccessAdopt" class="fixed inset-0 backdrop-blur-sm backdrop-brightness-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 text-center">
             <div class="mb-4 text-green-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
