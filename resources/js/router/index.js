@@ -1,9 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import EditProduct from '../components/EditProduct.vue';
-import CreateAnimal from "../components/CreateAnimal.vue";
 import Registration from "../components/Registration.vue";
 import HomePage from "../components/HomePage.vue";
-import Pets from "../components/Pets.vue";
 import AdoptAnimal from '../components/AdoptAnimal.vue';
 import PetDetailsPage from '../components/PetDetailsPage.vue';
 import AdoptPetDetailsPage from '../components/AdoptPetDetailsPage.vue';
@@ -31,14 +28,6 @@ const routes = [
         props: true
     },
     {
-        path: '/products/:id/edit',
-        component: EditProduct,
-    },
-    {
-        path: '/create-animal',
-        component: CreateAnimal,
-    },
-    {
         path: '/register',
         component: Registration,
     },
@@ -46,10 +35,6 @@ const routes = [
         path: '/navbar',
         component: Navbar,
     },
-    {
-        path: '/pets',
-        component: Pets,
-    }
 ];
 
 const router = createRouter({

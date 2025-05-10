@@ -431,18 +431,19 @@ export default {
             }
 
             const petTypes = {
-                'cat': 'Кошка',
-                'dog': 'Собака',
-                'bird': 'Птица',
-                'other': 'Другое животное'
+                'cat': this.$t('recent.cat') || 'Кошка',
+                'dog': this.$t('recent.dog') || 'Собака',
+                'bird': this.$t('recent.bird') || 'Птица',
+                'other': this.$t('recent.other') || 'Другое животное'
             };
+
 
             return petTypes[pet.petType] || 'Животное';
         },
 
         formatDate(dateString) {
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('ru-RU', options);
+            return new Date(dateString).toLocaleDateString(this.$i18n.locale || 'ru-RU', options);
         },
 
         viewDetails(petId) {

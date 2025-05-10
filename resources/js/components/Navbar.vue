@@ -1,16 +1,12 @@
 <template>
     <body class="font-sans">
 
-    <!-- Header -->
     <header class="bg-blue-100 py-4">
         <div class="container mx-auto max-w-screen-xl flex justify-between items-center px-4">
-            <!-- Сол жақ -->
             <div class="flex items-center gap-4 text-sm font-bold">
                 <span>{{ $t('header.contacts') }}</span>
                 <span>{{ $t('header.email') }}</span>
             </div>
-
-            <!-- Оң жақ -->
             <div class="flex gap-2">
                 <a href="https://t.me/"><img src="/storage/app/public/imageMenu/telegram.png" class="w-8 h-8" alt="Telegram" /></a>
                 <a href="https://instagram.com"><img src="/storage/app/public/imageMenu/instagram.png" class="w-8 h-8" alt="Instagram" /></a>
@@ -119,17 +115,7 @@ export default {
             this.showDropdown = false;
         }
     },
-    // mounted() {
-    //     // Close dropdown when clicking outside
-    //     document.addEventListener('click', () => {
-    //         this.showDropdown = false;
-    //     });
-    // },
-    // beforeUnmount() {
-    //     document.removeEventListener('click', () => {
-    //         this.showDropdown = false;
-    //     });
-    // }
+
 }
 </script>
 

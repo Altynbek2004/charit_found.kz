@@ -58,9 +58,9 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
+                    <h4 class="text-lg font-medium">{{ pet.namePet }}</h4>
                     <p class="text-sm text-gray-600">{{ pet.location }}</p>
-                    <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
+                    <p class="text-sm text-gray-600">{{ pet.breed }}</p>
                     <button
                         class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                         @click="viewDetailsAdopt(pet.id)"

@@ -159,7 +159,7 @@ export default {
 
         formatDate(dateString) {
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('ru-RU', options);
+            return new Date(dateString).toLocaleDateString(this.$i18n.locale || 'ru-RU', options);
         }
     }
 };
