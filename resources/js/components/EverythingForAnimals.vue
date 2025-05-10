@@ -1,11 +1,11 @@
 <template>
     <div class="w-full min-h-screen bg-blue-50">
         <div class="container mx-auto px-4 py-12">
-            <h1 class="text-4xl font-bold text-center mb-12">Все для животных рядом</h1>
+            <h1 class="text-4xl font-bold text-center mb-12">{{ $t('everything.title') }}</h1>
 
             <div class="mb-4 flex justify-center" v-if="!locationPermissionGranted">
                 <button @click="requestGeolocation" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Разрешить определение местоположения
+                    {{ $t('everything.locationPermissionGranted') }}
                 </button>
             </div>
 
@@ -87,7 +87,7 @@ export default {
                     }
                 });
             } else {
-                this.locationError = "Ваш браузер не поддерживает геолокацию";
+                this.locationError = this.$t('everything.locationError');
                 this.map();
             }
         },
@@ -101,22 +101,22 @@ export default {
                     error => {
                         switch(error.code) {
                             case error.PERMISSION_DENIED:
-                                this.locationError = "Доступ к определению местоположения отклонен пользователем";
+                                this.locationError = this.$t('everything.locationError1');
                                 break;
                             case error.POSITION_UNAVAILABLE:
-                                this.locationError = "Информация о вашем местоположении недоступна";
+                                this.locationError = this.$t('everything.locationError2');
                                 break;
                             case error.TIMEOUT:
-                                this.locationError = "Истекло время ожидания при определении местоположения";
+                                this.locationError =this.$t('everything.locationError3');
                                 break;
                             default:
-                                this.locationError = "Произошла неизвестная ошибка при определении местоположения";
+                                this.locationError = this.$t('everything.locationError4');
                                 break;
                         }
                     }
                 );
             } else {
-                this.locationError = "Ваш браузер не поддерживает геолокацию";
+                this.locationError = this.$t('everything.locationError5');
             }
         },
         getUserLocation() {
@@ -144,9 +144,9 @@ export default {
             // Добавляем маркер пользователя, если есть геолокация
             if (this.userLocation) {
                 const userPlacemark = new ymaps.Placemark(this.userLocation, {
-                    balloonContentHeader: 'Вы здесь',
-                    balloonContentBody: 'Ваше текущее местоположение',
-                    hintContent: 'Вы здесь'
+                    balloonContentHeader: this.$t('everything.hear'),
+                    balloonContentBody: this.$t('everything.hear1'),
+                    hintContent: this.$t('everything.hear')
                 }, {
                     preset: 'islands#blueCircleDotIcon'
                 });

@@ -2,7 +2,7 @@
 <template>
     <div class="w-full min-h-screen bg-blue-50">
         <div class="container mx-auto px-4 py-12">
-            <h1 class="text-4xl font-bold text-center mb-12">Почему нас выбирают?</h1>
+            <h1 class="text-4xl font-bold text-center mb-12">{{$t('whyChooseUs.title')}}</h1>
 
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div v-for="(reason, index) in reasons" :key="index"
@@ -18,29 +18,29 @@
 <script>
 export default {
     name: 'ReasonsList',
-    data() {
-        return {
-            reasons: [
+    computed: {
+        reasons() {
+            return [
                 {
-                    title: 'Интеграция ИИ',
-                    text: 'Наш ИИ помогает быстро подобрать животное по вашим предпочтениям, учитывая породу, возраст, характер и условия содержания.'
+                    title: this.$t('whyChooseUs.title1'),
+                    text: this.$t('whyChooseUs.text1')
                 },
                 {
-                    title: 'Удобная геолокация',
-                    text: 'Вы легко найдете животных, которые находятся рядом с вами — всё для того, чтобы процесс знакомства был проще и быстрее.'
+                    title: this.$t('whyChooseUs.title2'),
+                    text: this.$t('whyChooseUs.text2')
                 },
                 {
-                    title: 'Простота и адаптивность',
-                    text: 'Наша платформа интуитивно понятна: вы без труда сможете найти любимца, пролистать анкеты, узнать подробности и связаться с приютом.'
+                    title: this.$t('whyChooseUs.title3'),
+                    text: this.$t('whyChooseUs.text3')
                 },
                 {
-                    title: 'Поддержка других приютов',
-                    text: 'Мы сотрудничаем с множеством приютов, помогая им находить заботливых хозяев для их подопечных.'
+                    title: this.$t('whyChooseUs.title4'),
+                    text: this.$t('whyChooseUs.text4')
                 }
-            ]
-
-        };
+            ];
+        }
     }
+
 };
 </script>
 

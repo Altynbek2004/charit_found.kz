@@ -5,37 +5,37 @@
             <div class="max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div>
-                        <h3 class="font-bold text-lg mb-3">О платформе</h3>
+                        <h3 class="font-bold text-lg mb-3">{{$t('footer.about')}}</h3>
                         <ul class="space-y-2">
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>О проекте Adoptly</span>
+                                <span>{{$t('footer.about1')}}</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Как это работает</span>
+                                <span>{{$t('footer.works')}}</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Часто задаваемые вопросы (FAQ)</span>
+                                <span>{{$t('footer.questions')}}</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Отзывы пользователей</span>
+                                <span>{{$t('footer.comments')}}</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Партнёрам и волонтёрам</span>
+                                <span>{{$t('footer.partner')}}</span>
                             </li>
                         </ul>
                     </div>
 
                     <div>
-                        <h3 class="font-bold text-lg mb-3">Контакты</h3>
+                        <h3 class="font-bold text-lg mb-3">{{$t('footer.contact')}}</h3>
                         <ul class="space-y-2">
                             <li class="flex items-start">
                                 <span class="text-red-500 mr-2">•</span>
-                                <span>г. Алматы</span>
+                                <span>{{$t('footer.city')}}</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
@@ -47,13 +47,13 @@
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Пн–Пт: 09:00–18:00</span>
+                                <span>{{$t('footer.week')}}</span>
                             </li>
                         </ul>
                     </div>
 
                     <div>
-                        <h3 class="font-bold text-lg mb-3">Мы в сети</h3>
+                        <h3 class="font-bold text-lg mb-3">{{$t('footer.online')}}</h3>
                         <ul class="space-y-2">
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
@@ -75,30 +75,30 @@
                     </div>
 
                     <div>
-                        <h3 class="font-bold text-lg mb-3">Документы</h3>
+                        <h3 class="font-bold text-lg mb-3">{{$t('footer.documents')}}</h3>
                         <ul class="space-y-2">
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Политика конфиденциальности</span>
+                                <span>{{$t('footer.politic')}}</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Пользовательское соглашение</span>
+                                <span>{{$t('footer.agree')}}</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Условия обработки персональных данных</span>
+                                <span>{{$t('footer.agree1')}}</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="mr-2">•</span>
-                                <span>Правила размещения объявлений</span>
+                                <span>{{$t('footer.agree2')}}</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="container mx-auto py-6 px-6 text-center text-gray-700">
-                    <p>© {{ new Date().getFullYear() }} Компания. Все права защищены.</p>
+                    <p>© {{ new Date().getFullYear() }} {{$t('footer.company')}}</p>
                 </div>
             </div>
         </div>

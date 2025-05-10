@@ -73,7 +73,7 @@ export default {
             selectedLanguage: 'Рус',
             languages: [
                 { code: 'ru', display: 'Рус' },
-                { code: 'en', display: 'ENG' },
+                { code: 'en', display: 'Eng' },
                 { code: 'kz', display: 'Қаз' }
             ],
         };

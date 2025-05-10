@@ -53,7 +53,7 @@ export default {
         cat: 'Cat',
         dog: 'Dog',
         bird: 'Bird',
-        other: 'Other',
+        other: 'Other animal',
         specifyPet: 'Specify the type of animal*',
         breed: 'Breed (if known)',
         gender: 'Gender',
@@ -77,6 +77,121 @@ export default {
         locationPlaceholder: 'City, district, street',
         descriptionPlaceholder: 'Distinctive features, health condition, behavior, etc.',
         close: 'Close',
+    },
+
+    h1: {
+        adopt: 'Adopt an animal',
+        addAnAd: 'Add an ad',
+        still: 'more',
+        breed: 'Breed',
+        namePet: 'Pet name',
+        age: 'Age',
+        location: 'Location*',
+    },
+    tabs: ['Dogs', 'Cats', 'Birds', 'Others'],
+
+    tabs1: {
+        tabs2: 'Dogs',
+        tabs3: 'Cats',
+        tabs4: 'Birds',
+        tabs5: 'Others',
+    },
+
+    askQuestion: {
+        title: 'Ask a question to our assistant chat',
+        chat: 'Chat with AI',
+        clear: 'Clear chat',
+        start: 'Start the conversation by sending a message',
+        typing: 'Typing',
+        input: 'Enter a message...',
+        send: 'Send',
+    },
+
+    greeting: 'Hello! I am your personal AI assistant. Ask your question about the shelter or any other topic you are interested in.',
+
+    everything: {
+        title: 'Everything for animals nearby',
+        locationPermissionGranted: 'Allow location access',
+        locationError: 'Your browser does not support geolocation',
+        locationError1: 'Location access denied by the user',
+        locationError2: 'Your location information is unavailable',
+        locationError3: 'Location request timed out',
+        locationError4: 'An unknown error occurred while determining location',
+        locationError5: 'Your browser does not support geolocation',
+        hear: 'You are here',
+        hear1: 'Your current location',
+    },
+
+    whyChooseUs: {
+        title: 'Why choose us?',
+        title1: 'AI Integration',
+        text1: 'Our AI quickly helps match you with a pet based on your preferences — considering breed, age, temperament, and living conditions.',
+        title2: 'Convenient Geolocation',
+        text2: 'You can easily find animals near you — making the process of meeting and adopting faster and simpler.',
+        title3: 'Simplicity and Adaptability',
+        text3: 'Our platform is intuitive: you can easily browse pet profiles, view details, and contact shelters.',
+        title4: 'Support for Other Shelters',
+        text4: 'We collaborate with many shelters, helping them find loving owners for their animals.',
+    },
+
+    contactUs: {
+        name: 'Name',
+        phone: 'Phone',
+        topic: 'Topic',
+        choooseTopic: 'Choose a topic',
+        topic1: 'General Inquiry',
+        topic2: 'Technical Support',
+        topic3: 'Payment Question',
+        topic4: 'Other',
+        message: 'Message',
+        sending: 'Sending...',
+        sendingMessage: 'Send Message',
+        thanks: 'Thank you for contacting us!',
+        taken: 'We have received your message and will respond shortly.',
+        address: 'Address',
+        address1: '123 Abay Street, Almaty',
+    },
+
+    footer: {
+        about: 'About the platform',
+        about1: 'About the Adoptly project',
+        works: 'How it works',
+        questions: 'Frequently Asked Questions (FAQ)',
+        comments: 'User reviews',
+        partner: 'For partners and volunteers',
+        contact: 'Contacts',
+        city: 'Almaty',
+        week: 'Mon–Fri: 09:00–18:00',
+        online: 'We are online',
+        documents: 'Documents',
+        politic: 'Privacy Policy',
+        agree: 'User Agreement',
+        agree1: 'Personal Data Processing Terms',
+        agree2: 'Ad Posting Rules',
+        company: 'Company. All rights reserved.',
+    },
+
+    details: {
+        loading: 'Loading pet information...',
+        back: 'Go back',
+        back1: 'Back',
+        breed: 'Breed:',
+        gender: 'Gender:',
+        age: 'Age:',
+        location: 'Found at:',
+        foundDate: 'Date found:',
+        contact: 'Contact information',
+        name: 'Name:',
+        phone: 'Phone:',
+        email: 'Email',
+        namePet:'Pet Name:',
+        location1:'Location:',
     }
+
+
+
+
+
+
 
 };

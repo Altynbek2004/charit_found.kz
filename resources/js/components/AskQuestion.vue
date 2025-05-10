@@ -1,25 +1,25 @@
 <template>
     <div class="bg-blue-100 min-h-screen p-6">
         <h2 class="text-xl font-bold text-center mb-4">
-            Задайте вопрос нашему чату-помощнику
+            {{ $t('askQuestion.title') }}
         </h2>
 
         <div class="bg-blue-50 rounded-lg p-6 max-w-4xl mx-auto shadow min-h-[800px] flex flex-col justify-between">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-lg font-bold">Чат с AI</h3>
+                <h3 class="text-lg font-bold">{{ $t('askQuestion.chat') }}</h3>
                 <button
                     @click="clearChat"
                     class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm"
                     :disabled="messages.length <= 1"
                 >
-                    Очистить чат
+                    {{ $t('askQuestion.clear') }}
                 </button>
             </div>
 
             <!-- Сообщения -->
             <div class="overflow-y-auto h-[600px] space-y-4 mb-6" ref="messagesContainer">
                 <div v-if="messages.length === 0" class="text-center text-gray-500 italic">
-                    Начните диалог, отправив сообщение
+                    {{ $t('askQuestion.start') }}
                 </div>
                 <div v-for="(msg, index) in messages" :key="index"
                      :class="[
@@ -29,7 +29,7 @@
                     {{ msg.content }}
                 </div>
                 <div v-if="loading" class="bg-blue-200 rounded px-4 py-2 max-w-sm">
-                    <span class="loading-animation">Печатает<span>.</span><span>.</span><span>.</span></span>
+                    <span class="loading-animation">{{ $t('askQuestion.typing') }}<span>.</span><span>.</span><span>.</span></span>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
                 <input
                     type="text"
                     v-model="userMessage"
-                    placeholder="Введите сообщение..."
+                    :placeholder="$t('askQuestion.input')"
                     class="w-full sm:flex-1 px-4 py-2 rounded-t sm:rounded-l sm:rounded-tr-none border border-gray-300 focus:outline-none"
                     maxlength="255"
                     :disabled="loading"
@@ -47,7 +47,7 @@
                     class="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded-b sm:rounded-r sm:rounded-bl-none hover:bg-blue-600 disabled:bg-blue-300 transition"
                     :disabled="loading || !userMessage.trim()"
                 >
-                    Отправить
+                    {{ $t('askQuestion.send') }}
                 </button>
             </form>
 
@@ -161,19 +161,27 @@ export default {
             // Оставляем только приветственное сообщение
             this.messages = [{
                 role: 'assistant',
-                content: 'Здравствуйте! Я ваш личный ИИ-помощник. Задайте ваш вопрос о приюте или другой интересующей вас теме.'
+                content: this.$t('greeting')
             }];
-            // Сбрасываем идентификатор сессии, чтобы создать новую
             this.sessionId = null;
         }
     },
     mounted() {
         // Приветственное сообщение при загрузке чата
-        const welcomeMessage = 'Здравствуйте! Я ваш личный ИИ-помощник. Задайте ваш вопрос о приюте или другой интересующей вас теме.';
+        const welcomeMessage = this.$t('greeting');
         this.messages.push({
             role: 'assistant',
-            content: welcomeMessage
+            content: welcomeMessage,
+            isGreeting: true
         });
+    },
+    watch: {
+        '$i18n.locale'(newLocale, oldLocale) {
+            const welcomeIndex = this.messages.findIndex(m => m.role === 'assistant' && m.isGreeting);
+            if (welcomeIndex !== -1) {
+                this.messages[welcomeIndex].content = this.$t('greeting');
+            }
+        }
     },
     updated() {
         this.scrollToBottom();

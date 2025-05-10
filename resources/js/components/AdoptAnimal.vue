@@ -1,12 +1,13 @@
 <template>
     <div class="max-w-5xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-center mb-6">Приютить животное</h1>
+        <h1 class="text-3xl font-bold text-center mb-6">{{ $t('h1.adopt') }}</h1>
 
-        <div
-            @click="showAddFormAdopt = true"
-            class="flex justify-end mb-4">
-            <button class="bg-blue-100 text-blue-900 font-semibold px-4 py-2 rounded shadow">
-                добавить объявление
+        <div class="flex justify-end mb-4">
+            <button
+                @click="showAddFormAdopt = true"
+                class="bg-blue-100 text-blue-900 font-semibold px-4 py-2 rounded shadow"
+            >
+                {{ $t('h1.addAnAd') }}
             </button>
         </div>
 
@@ -14,156 +15,78 @@
             <button
                 v-for="(tab, index) in tabs"
                 :key="index"
-                :class="['pb-2 font-medium', activeTab === tab ? 'border-b-4 border-blue-500 text-black' : 'text-gray-500']"
-                @click="activeTab = tab"
+                :class="[
+          'pb-2 font-medium',
+          activeTabIndex === index ? 'border-b-4 border-blue-500 text-black' : 'text-gray-500'
+        ]"
+                @click="activeTabIndex = index"
             >
                 {{ tab }}
             </button>
         </div>
-        <div v-bind:class="{'active' : activeTab == 'Собаки'}" v-if="activeTab === 'Собаки'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div v-if="loading" class="text-center py-8">
-                <p>Загрузка объявлений...</p>
+
+        <div
+            v-for="(tabName, tabIndex) in tabs"
+            :key="tabName"
+            v-show="activeTabIndex === tabIndex"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+        >
+            <div v-if="loading" class="text-center py-8 col-span-3">
+                <p>{{ $t('recent.loading') }}</p>
             </div>
-            <div v-else-if="recentPetsDog.length === 0" class="text-center py-8">
-                <p>Пока нет объявлений о найденных животных</p>
-            </div>
-            <div v-else v-for="pet in recentPetsDog" :key="pet.id"
+            <div
+                v-else-if="getPetsForActiveTab.length === 0"
+                class="text-center py-8 col-span-3"
             >
-                <div v-if="pet.petType ==='dog'" class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300">
-                    <div>
-                        <img v-if="pet.photoUrl"
-                             :src="pet.photoUrl"
-                             :alt="getPetTypeTextAdopt(pet)"
-                             class="w-full h-48 object-cover rounded-md mb-3" />
-                        <div v-else class="flex items-center justify-center h-full w-full">
-                            <span class="text-gray-400">Нет фото</span>
-                        </div>
+                <p>{{ $t('recent.endLoading') }}</p>
+            </div>
+            <div
+                v-else
+                v-for="pet in getPetsForActiveTab"
+                :key="pet.id"
+                class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300"
+            >
+                <div>
+                    <img
+                        v-if="pet.photoUrl"
+                        :src="pet.photoUrl"
+                        :alt="getPetTypeTextAdopt(pet)"
+                        class="w-full h-48 object-cover rounded-md mb-3"
+                    />
+                    <div v-else class="flex items-center justify-center h-48 bg-gray-100 rounded-md mb-3">
+                        <span class="text-gray-400">{{ $t('recent.noPhoto') }}</span>
                     </div>
-                    <div class="p-4">
-                        <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
-                        <p class="text-sm text-gray-600">{{ pet.location }}</p>
-                        <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
-                        <button
-                            class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                            @click="viewDetailsAdopt(pet.id)"
-                        >
-                            Подробнее
-                        </button>
-                    </div>
+                </div>
+                <div class="p-4">
+                    <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
+                    <p class="text-sm text-gray-600">{{ pet.location }}</p>
+                    <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
+                    <button
+                        class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                        @click="viewDetailsAdopt(pet.id)"
+                    >
+                        {{ $t('recent.more') }}
+                    </button>
                 </div>
             </div>
         </div>
-        <div v-bind:class="{'active' : activeTab == 'Кошки'}" v-if="activeTab === 'Кошки'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div v-if="loading" class="text-center py-8">
-                <p>Загрузка объявлений...</p>
-            </div>
-            <div v-else-if="recentPetsCat.length === 0" class="text-center py-8">
-                <p>Пока нет объявлений о найденных животных</p>
-            </div>
-            <div v-else v-for="pet in recentPetsCat" :key="pet.id"
-            >
-                <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300">
-                    <div>
-                        <img v-if="pet.photoUrl"
-                             :src="pet.photoUrl"
-                             :alt="getPetTypeTextAdopt(pet)"
-                             class="w-full h-48 object-cover rounded-md mb-3" />
-                        <div v-else class="flex items-center justify-center h-full w-full">
-                            <span class="text-gray-400">Нет фото</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
-                        <p class="text-sm text-gray-600">{{ pet.location }}</p>
-                        <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
-                        <button
-                            class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                            @click="viewDetailsAdopt(pet.id)"
-                        >
-                            Подробнее
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div v-bind:class="{'active' : activeTab == 'Птицы'}" v-if="activeTab === 'Птицы'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div v-if="loading" class="text-center py-8">
-                <p>Загрузка объявлений...</p>
-            </div>
-            <div v-else-if="recentPetsBird.length === 0" class="text-center py-8">
-                <p>Пока нет объявлений о найденных животных</p>
-            </div>
-            <div v-else v-for="pet in recentPetsBird" :key="pet.id"
-            >
-                <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300">
-                    <div>
-                        <img v-if="pet.photoUrl"
-                             :src="pet.photoUrl"
-                             :alt="getPetTypeTextAdopt(pet)"
-                             class="w-full h-48 object-cover rounded-md mb-3" />
-                        <div v-else class="flex items-center justify-center h-full w-full">
-                            <span class="text-gray-400">Нет фото</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
-                        <p class="text-sm text-gray-600">{{ pet.location }}</p>
-                        <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
-                        <button
-                            class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                            @click="viewDetailsAdopt(pet.id)"
-                        >
-                            Подробнее
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div v-bind:class="{'active' : activeTab == 'Другие'}" v-if="activeTab === 'Другие'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div v-if="loading" class="text-center py-8">
-                <p>Загрузка объявлений...</p>
-            </div>
-            <div v-else-if="recentPetsOther.length === 0" class="text-center py-8">
-                <p>Пока нет объявлений о найденных животных</p>
-            </div>
-            <div v-else v-for="pet in recentPetsOther" :key="pet.id"
-            >
-                <div class="bg-blue-100 p-4 rounded-lg text-center hover:shadow-lg transition-shadow duration-300 border border-transparent hover:border-blue-300">
-                    <div>
-                        <img v-if="pet.photoUrl"
-                             :src="pet.photoUrl"
-                             :alt="getPetTypeTextAdopt(pet)"
-                             class="w-full h-48 object-cover rounded-md mb-3" />
-                        <div v-else class="flex items-center justify-center h-full w-full">
-                            <span class="text-gray-400">Нет фото</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="text-lg font-medium">{{ getPetTypeTextAdopt(pet) }}</h4>
-                        <p class="text-sm text-gray-600">{{ pet.location }}</p>
-                        <p class="text-sm text-gray-600">{{ pet.pet_name }}</p>
-                        <button
-                            class="mt-2 w-full px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                            @click="viewDetailsAdopt(pet.id)"
-                        >
-                            Подробнее
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="flex justify-center mt-8">
             <button class="bg-blue-200 text-blue-900 font-semibold px-6 py-2 rounded shadow">
-                еще
+                {{ $t('h1.still') }}
             </button>
         </div>
     </div>
 
-    <div v-if="showAddFormAdopt" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <!-- Add pet form modal -->
+    <div
+        v-if="showAddFormAdopt"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+    >
         <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-semibold">Добавить объявление</h3>
+                    <h3 class="text-2xl font-semibold">{{ $t('recent.addAnAd') }}</h3>
                     <button
                         @click="showAddFormAdopt = false"
                         class="text-gray-500 hover:text-gray-700"
@@ -177,23 +100,23 @@
                 <form @submit.prevent="submitFormAdopt" class="space-y-4">
                     <!-- Pet Info -->
                     <div>
-                        <label for="petType" class="block text-sm font-medium text-gray-700 mb-1">Вид животного*</label>
+                        <label for="petType" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.typePet') }}</label>
                         <select
                             id="petType"
                             v-model="formAdopt.petType"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                             required
                         >
-                            <option value="" disabled selected>Выберите вид животного</option>
-                            <option value="cat">Кошка</option>
-                            <option value="dog">Собака</option>
-                            <option value="bird">Птица</option>
-                            <option value="other">Другое</option>
+                            <option value="" disabled selected>{{ $t('recent.choosePet') }}</option>
+                            <option value="cat">{{ $t('recent.cat') }}</option>
+                            <option value="dog">{{ $t('recent.dog') }}</option>
+                            <option value="bird">{{ $t('recent.bird') }}</option>
+                            <option value="other">{{ $t('recent.other') }}</option>
                         </select>
                     </div>
 
                     <div v-if="formAdopt.petType === 'other'">
-                        <label for="otherPetType" class="block text-sm font-medium text-gray-700 mb-1">Укажите вид животного*</label>
+                        <label for="otherPetType" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.specifyPet') }}</label>
                         <input
                             type="text"
                             id="otherPetType"
@@ -204,7 +127,17 @@
                     </div>
 
                     <div>
-                        <label for="breed" class="block text-sm font-medium text-gray-700 mb-1">Порода</label>
+                        <label for="pet_name" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('h1.namePet') }}</label>
+                        <input
+                            type="text"
+                            id="pet_name"
+                            v-model="formAdopt.namePet"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        />
+                    </div>
+
+                    <div>
+                        <label for="breed" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('h1.breed') }}</label>
                         <input
                             type="text"
                             id="breed"
@@ -212,70 +145,61 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
-                    <div>
-                        <label for="breed" class="block text-sm font-medium text-gray-700 mb-1">Имя животного</label>
-                        <input
-                            type="text"
-                            id="breed"
-                            v-model="formAdopt.namePet"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Пол</label>
+                            <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.gender') }}</label>
                             <select
                                 id="gender"
                                 v-model="formAdopt.gender"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                             >
-                                <option value="" disabled selected>Выберите пол</option>
-                                <option value="male">Самец</option>
-                                <option value="female">Самка</option>
+                                <option value="" disabled selected>{{ $t('recent.chooseGender') }}</option>
+                                <option value="male">{{ $t('recent.gender1') }}</option>
+                                <option value="female">{{ $t('recent.gender2') }}</option>
                             </select>
                         </div>
 
                         <div>
-                            <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Возраст</label>
+                            <label for="age" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('h1.age') }}</label>
                             <input
                                 type="text"
                                 id="age"
                                 v-model="formAdopt.age"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Например: 2 года"
+                                :placeholder="$t('recent.agePlaceholder')"
                             />
                         </div>
                     </div>
 
                     <!-- Location Info -->
                     <div>
-                        <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Место нахождения*</label>
+                        <label for="location" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('h1.location') }}</label>
                         <input
                             type="text"
                             id="location"
                             v-model="formAdopt.location"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                             required
-                            placeholder="Город, район, улица"
+                            :placeholder="$t('recent.locationPlaceholder')"
                         />
                     </div>
 
                     <!-- Description -->
                     <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Описание</label>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.description') }}</label>
                         <textarea
                             id="description"
                             v-model="formAdopt.description"
                             rows="4"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Особые приметы, состояние здоровья, поведение и т.д."
+                            :placeholder="$t('recent.descriptionPlaceholder')"
                         ></textarea>
                     </div>
 
                     <!-- Photo Upload -->
                     <div>
-                        <label for="photo" class="block text-sm font-medium text-gray-700 mb-1">Фотография животного</label>
+                        <label for="photo" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.photoPet') }}</label>
                         <input
                             type="file"
                             id="photo"
@@ -291,7 +215,7 @@
 
                     <!-- Contact Info -->
                     <div>
-                        <label for="contactName" class="block text-sm font-medium text-gray-700 mb-1">Ваше имя*</label>
+                        <label for="contactName" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.contactName') }}</label>
                         <input
                             type="text"
                             id="contactName"
@@ -302,7 +226,7 @@
                     </div>
 
                     <div>
-                        <label for="contactPhone" class="block text-sm font-medium text-gray-700 mb-1">Телефон*</label>
+                        <label for="contactPhone" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.contactPhone') }}</label>
                         <input
                             type="tel"
                             id="contactPhone"
@@ -313,7 +237,7 @@
                     </div>
 
                     <div>
-                        <label for="contactEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <label for="contactEmail" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('recent.contactEmail') }}</label>
                         <input
                             type="email"
                             id="contactEmail"
@@ -329,7 +253,7 @@
                             class="w-full px-4 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
                             :disabled="submittingAdopt"
                         >
-                            {{ submittingAdopt ? 'Отправка...' : 'Опубликовать объявление' }}
+                            {{ submittingAdopt ? $t('recent.sending') : $t('recent.postAnAd') }}
                         </button>
                     </div>
                 </form>
@@ -337,20 +261,24 @@
         </div>
     </div>
 
-    <div v-if="showSuccessAdopt" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <!-- Success modal -->
+    <div
+        v-if="showSuccessAdopt"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+    >
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 text-center">
             <div class="mb-4 text-green-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
             </div>
-            <h3 class="text-2xl font-semibold mb-2">Спасибо!</h3>
-            <p class="text-lg mb-6">Ваше объявление успешно опубликовано</p>
+            <h3 class="text-2xl font-semibold mb-2">{{ $t('recent.thanks') }}</h3>
+            <p class="text-lg mb-6">{{ $t('recent.postedSuccess') }}</p>
             <button
                 @click="closeSuccessAdopt"
                 class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
             >
-                Закрыть
+                {{ $t('recent.close') }}
             </button>
         </div>
     </div>
@@ -385,16 +313,41 @@ export default {
             recentPetsCat: [],
             recentPetsBird: [],
             recentPetsOther: [],
-            tabs: ['Собаки', 'Кошки', 'Птицы', 'Другие'],
-            activeTab: 'Собаки'
-        }
+            activeTabIndex: 0,
+            errors: {} // Added to store validation errors
+        };
     },
     mounted() {
         this.fetchRecentPetsAdopt();
     },
+    computed: {
+        tabs() {
+            return [
+                this.$t('tabs1.tabs2'),
+                this.$t('tabs1.tabs3'),
+                this.$t('tabs1.tabs4'),
+                this.$t('tabs1.tabs5')
+            ];
+        },
+        activeTab() {
+            return this.tabs[this.activeTabIndex];
+        },
+        // Get pets for the currently active tab
+        getPetsForActiveTab() {
+            const petsArrays = [
+                this.recentPetsDog,    // index 0 - Иттер (Dogs)
+                this.recentPetsCat,    // index 1 - Мысықтар (Cats)
+                this.recentPetsBird,   // index 2 - Құстар (Birds)
+                this.recentPetsOther   // index 3 - Басқалар (Others)
+            ];
+
+            return petsArrays[this.activeTabIndex] || [];
+        }
+    },
     methods: {
         submitFormAdopt() {
             this.submittingAdopt = true;
+            this.errors = {}; // Reset errors before submitting
 
             // Create FormData for file upload
             const formData = new FormData();
@@ -442,7 +395,11 @@ export default {
                         contactPhone: '',
                         contactEmail: ''
                     };
+
+                    // Refresh pet listings
                     this.fetchRecentPetsAdopt();
+
+                    // Reset file input
                     this.imagePreviewAdopt = null;
                     if (this.$refs.fileInput) {
                         this.$refs.fileInput.value = '';
@@ -451,18 +408,18 @@ export default {
                 .catch(error => {
                     console.error('Error submitting form:', error.response ? error.response.data : error);
                     this.submittingAdopt = false;
+
                     // Handle validation errors
                     if (error.response && error.response.status === 422) {
-                        // You can handle validation errors here
                         this.errors = error.response.data.errors;
+                        alert(this.$t('recent.validationError'));
                     } else {
                         // Handle other errors
-                        alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже.');
+                        alert(this.$t('recent.generalError') || 'Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже.');
                     }
                 });
         },
 
-// Add this method to handle file upload
         handleFileUploadAdopt(event) {
             const file = event.target.files[0];
             if (file) {
@@ -475,23 +432,25 @@ export default {
                 reader.readAsDataURL(file);
             }
         },
+
         closeSuccessAdopt() {
             this.showSuccessAdopt = false;
         },
+
         fetchRecentPetsAdopt() {
             this.loading = true;
 
             axios.get('/api/adopt-recent-pets')
                 .then(response => {
-                    this.recentPetsDog = response.data.recentPetsDog;
-                    this.recentPetsCat = response.data.recentPetsCat;
-                    this.recentPetsBird = response.data.recentPetsBird;
-                    this.recentPetsOther = response.data.recentPetsOther;
+                    this.recentPetsDog = response.data.recentPetsDog || [];
+                    this.recentPetsCat = response.data.recentPetsCat || [];
+                    this.recentPetsBird = response.data.recentPetsBird || [];
+                    this.recentPetsOther = response.data.recentPetsOther || [];
                     this.loading = false;
                 })
                 .catch(error => {
                     console.error('Error fetching recent pets:', error);
-                    this.error = 'Не удалось загрузить объявления';
+                    alert(this.$t('recent.loadError') || 'Не удалось загрузить объявления');
                     this.loading = false;
                 });
         },
@@ -502,27 +461,30 @@ export default {
             }
 
             const petTypes = {
-                'cat': 'Кошка',
-                'dog': 'Собака',
-                'bird': 'Птица',
-                'other': 'Другое животное'
+                'cat': this.$t('recent.cat') || 'Кошка',
+                'dog': this.$t('recent.dog') || 'Собака',
+                'bird': this.$t('recent.bird') || 'Птица',
+                'other': this.$t('recent.other') || 'Другое животное'
             };
 
-            return petTypes[pet.petType] || 'Животное';
+            return petTypes[pet.petType] || this.$t('recent.animal') || 'Животное';
         },
 
         formatDateAdopt(dateString) {
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('ru-RU', options);
+            return new Date(dateString).toLocaleDateString(this.$i18n.locale || 'ru-RU', options);
         },
 
         viewDetailsAdopt(petId) {
             // Navigate to pet details page
-            this.$router.push({ name: 'adopt-pet-details', params: { id: petId } });
-            // If you're not using Vue Router, you can use window.location instead:
-            // window.location.href = `/pets/${petId}`;
+            if (this.$router) {
+                this.$router.push({ name: 'adopt-pet-details', params: { id: petId } });
+            } else {
+                // Fallback if router is not available
+                window.location.href = `/pets/${petId}`;
+            }
         }
-    },
+    }
 };
 </script>
 
