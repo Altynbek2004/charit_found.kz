@@ -11,7 +11,9 @@ export default {
         about: 'О нас',
         pets: 'Питомцы',
         assistant: 'Чат-помощник',
-        login: 'Войти'
+        login: 'Войти',
+        profile:"Мой профиль",
+        logout:"Выход",
     },
     shelter: {
         name: 'Приют "Амиго"',

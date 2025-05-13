@@ -11,7 +11,9 @@ export default {
         about: 'About Us',
         pets: 'Pets',
         assistant: 'Chat Assistant',
-        login: 'Login'
+        login: 'Login',
+        profile:"My profile",
+        logout:"Logout",
     },
     shelter: {
         name: 'Amigo Shelter',

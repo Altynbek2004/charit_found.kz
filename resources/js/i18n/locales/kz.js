@@ -11,7 +11,9 @@ export default {
         about: 'Біз туралы',
         pets: 'Үй жануарлары',
         assistant: 'Чат-көмекші',
-        login: 'Кіру'
+        login: 'Кіру',
+        profile:"Менің профилім",
+        logout:"Шығу",
     },
     shelter: {
         name: '"Амиго" баспанасы',
