@@ -1,75 +1,83 @@
 <template>
     <Navbar />
 
-    <section class="flex flex-col items-center bg-blue-200 p-4 sm:p-6 min-h-screen">
-        <div class="w-full max-w-4xl bg-blue-100 p-4 sm:p-6 rounded-lg shadow-lg">
-            <h2 class="text-center text-2xl font-bold mb-4">Регистрация</h2>
+    <section class="flex flex-col items-center bg-sky-100 p-6 min-h-screen">
+        <div class="w-full max-w-4xl bg-white p-6 rounded-2xl shadow-2xl transition duration-500 hover:shadow-blue-300">
+            <h2 class="text-center text-3xl font-bold text-sky-600 mb-8">Регистрация</h2>
+
             <form
                 class="w-full max-w-md mx-auto"
                 method="POST"
                 @submit.prevent="handleSubmit"
                 enctype="multipart/form-data"
             >
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700">Имя</label>
+                <!-- Имя -->
+                <div class="mb-5">
+                    <label for="name" class="block text-sky-700 font-semibold mb-1">Имя</label>
                     <input
                         type="text"
                         id="name"
                         v-model="form.name"
-                        class="w-full px-4 py-2 mt-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full px-4 py-2 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300 hover:ring-1 hover:ring-sky-300"
                     />
                 </div>
 
-                <div class="mb-4">
-                    <label for="surname" class="block text-gray-700">Фамилия</label>
+                <!-- Фамилия -->
+                <div class="mb-5">
+                    <label for="surname" class="block text-sky-700 font-semibold mb-1">Фамилия</label>
                     <input
                         type="text"
                         id="surname"
                         v-model="form.surname"
-                        class="w-full px-4 py-2 mt-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full px-4 py-2 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300 hover:ring-1 hover:ring-sky-300"
                     />
                 </div>
 
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700">Электронные почта</label>
+                <!-- Email -->
+                <div class="mb-5">
+                    <label for="email" class="block text-sky-700 font-semibold mb-1">Электронные почта</label>
                     <input
                         type="email"
                         id="email"
                         v-model="form.email"
-                        class="w-full px-4 py-2 mt-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full px-4 py-2 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300 hover:ring-1 hover:ring-sky-300"
                     />
                 </div>
 
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700">Пароль</label>
+                <!-- Пароль -->
+                <div class="mb-5">
+                    <label for="password" class="block text-sky-700 font-semibold mb-1">Пароль</label>
                     <input
                         type="password"
                         id="password"
                         v-model="form.password"
-                        class="w-full px-4 py-2 mt-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full px-4 py-2 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300 hover:ring-1 hover:ring-sky-300"
                     />
                 </div>
 
-                <div class="mb-4">
-                    <label for="avatar" class="block text-gray-700">Аватар</label>
+                <!-- Аватар -->
+                <div class="mb-6">
+                    <label for="avatar" class="block text-sky-700 font-semibold mb-1">Аватар</label>
                     <input
                         type="file"
                         id="avatar"
                         name="image"
                         @change="handleFileUpload"
-                        class="w-full px-4 py-2 mt-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full px-4 py-2 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300 hover:ring-1 hover:ring-sky-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200"
                     />
                 </div>
 
+                <!-- Кнопка -->
                 <button
                     type="submit"
-                    class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full bg-sky-500 text-white py-2 rounded-lg font-semibold shadow-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400 transition duration-300 transform hover:-translate-y-0.5 hover:shadow-lg"
                 >
                     Зарегистрироваться
                 </button>
             </form>
         </div>
     </section>
+
 
 
     <Footer />

@@ -1,28 +1,32 @@
 <template>
     <div class="max-w-4xl mx-auto my-10 px-4">
-        <div v-if="loading" class="text-center py-8">
-            <p>{{$t('details.loading')}}</p>
+        <!-- Loading State -->
+        <div v-if="loading" class="text-center py-8 animate__animated animate__fadeIn">
+            <p class="text-blue-600">{{$t('details.loading')}}</p>
         </div>
 
-        <div v-else-if="error" class="text-center py-8">
+        <!-- Error State -->
+        <div v-else-if="error" class="text-center py-8 animate__animated animate__fadeIn">
             <p class="text-red-500">{{ error }}</p>
             <button
                 @click="$router.go(-1)"
-                class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                class="mt-4 px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300"
             >
                 {{$t('details.back')}}
             </button>
         </div>
 
-        <div v-else class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- Pet Details -->
+        <div v-else class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
             <div class="md:flex">
+                <!-- Pet Image -->
                 <div class="md:w-1/2">
-                    <div class="h-64 md:h-full bg-gray-200 flex items-center justify-center">
+                    <div class="h-64 md:h-full bg-gray-200 flex items-center justify-center transition-all duration-500 hover:scale-105">
                         <img
                             v-if="pet.photoUrl"
                             :src="pet.photoUrl"
                             :alt="getPetTypeText()"
-                            class="h-full w-full object-cover"
+                            class="h-full w-full object-cover rounded-lg transition-transform duration-500 hover:scale-110"
                         />
                         <div v-else class="flex items-center justify-center h-full w-full">
                             <span class="text-gray-400">{{$t('recent.noPhoto')}}</span>
@@ -30,61 +34,65 @@
                     </div>
                 </div>
 
+                <!-- Pet Info -->
                 <div class="md:w-1/2 p-6">
-                    <h1 class="text-2xl font-bold mb-4">{{ getPetTypeText() }}</h1>
+                    <h1 class="text-3xl font-bold text-blue-600 mb-4">{{ getPetTypeText() }}</h1>
 
                     <div class="mb-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div v-if="pet.breed" class="mb-2">
                                 <div class="text-sm text-gray-600">{{$t('details.breed')}}</div>
-                                <div>{{ pet.breed }}</div>
+                                <div class="font-medium text-blue-500">{{ pet.breed }}</div>
                             </div>
 
                             <div v-if="pet.gender" class="mb-2">
                                 <div class="text-sm text-gray-600">{{$t('details.gender')}}</div>
-                                <div>{{ getGenderText() }}</div>
+                                <div class="font-medium text-blue-500">{{ getGenderText() }}</div>
                             </div>
 
                             <div v-if="pet.age" class="mb-2">
                                 <div class="text-sm text-gray-600">{{$t('details.age')}}</div>
-                                <div>{{ pet.age }}</div>
+                                <div class="font-medium text-blue-500">{{ pet.age }}</div>
                             </div>
 
                             <div class="mb-2">
                                 <div class="text-sm text-gray-600">{{$t('details.location')}}</div>
-                                <div>{{ pet.location }}</div>
+                                <div class="font-medium text-blue-500">{{ pet.location }}</div>
                             </div>
 
                             <div class="mb-2">
                                 <div class="text-sm text-gray-600">{{$t('details.foundDate')}}</div>
-                                <div>{{ formatDate(pet.foundDate) }}</div>
+                                <div class="font-medium text-blue-500">{{ formatDate(pet.foundDate) }}</div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Pet Description -->
                     <div v-if="pet.description" class="mb-6">
-                        <h2 class="text-lg font-semibold mb-2">{{$t('recent.description')}}</h2>
+                        <h2 class="text-lg font-semibold mb-2 text-blue-600">{{$t('recent.description')}}</h2>
                         <p class="text-gray-700">{{ pet.description }}</p>
                     </div>
 
+                    <!-- Contact Info -->
                     <div class="border-t pt-4">
-                        <h2 class="text-lg font-semibold mb-2">{{$t('details.contact')}}</h2>
+                        <h2 class="text-lg font-semibold mb-2 text-blue-600">{{$t('details.contact')}}</h2>
                         <div class="text-sm text-gray-600">{{$t('details.name')}}</div>
-                        <div class="mb-2">{{ pet.contactName }}</div>
+                        <div class="font-medium text-gray-700 mb-2">{{ pet.contactName }}</div>
 
                         <div class="text-sm text-gray-600">{{$t('details.phone')}}</div>
-                        <div class="mb-2">{{ pet.contactPhone }}</div>
+                        <div class="font-medium text-gray-700 mb-2">{{ pet.contactPhone }}</div>
 
                         <div v-if="pet.contactEmail" class="mb-2">
                             <div class="text-sm text-gray-600">{{$t('details.email')}}</div>
-                            <div>{{ pet.contactEmail }}</div>
+                            <div class="font-medium text-gray-700">{{ pet.contactEmail }}</div>
                         </div>
                     </div>
 
+                    <!-- Back Button -->
                     <div class="mt-6">
                         <button
                             @click="$router.go(-1)"
-                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 mr-2"
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300"
                         >
                             {{$t('details.back1')}}
                         </button>
@@ -94,6 +102,8 @@
         </div>
     </div>
 </template>
+
+
 
 <script>
 export default {
@@ -120,7 +130,14 @@ export default {
         fetchPetDetails() {
             this.loading = true;
 
-            axios.get(`/api/found-pets/${this.id}`)
+            // Получаем токен авторизации (например, из localStorage)
+            const token = localStorage.getItem('token'); // Замените на нужный путь хранения токена
+
+            axios.get(`/found-pets/${this.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Добавляем токен в заголовок
+                }
+            })
                 .then(response => {
                     this.pet = response.data.data;
                     this.loading = false;
@@ -131,6 +148,7 @@ export default {
                     this.loading = false;
                 });
         },
+
 
         getPetTypeText() {
             if (this.pet.petType === 'other' && this.pet.otherPetType) {

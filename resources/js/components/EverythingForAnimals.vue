@@ -1,19 +1,29 @@
 <template>
-    <div class="w-full min-h-screen bg-blue-50">
-        <div class="container mx-auto px-4 py-12">
-            <h1 class="text-4xl font-bold text-center mb-12">{{ $t('everything.title') }}</h1>
+    <div class="w-full min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+        <div class="container mx-auto px-4 py-12 animate-fade-in-slow">
+            <h1 class="text-4xl font-extrabold text-center text-blue-600 mb-12 drop-shadow-md transition-all duration-300 hover:scale-105">
+                {{ $t('everything.title') }}
+            </h1>
 
-            <div class="mb-4 flex justify-center" v-if="!locationPermissionGranted">
-                <button @click="requestGeolocation" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <div class="mb-6 flex justify-center" v-if="!locationPermissionGranted">
+                <button
+                    @click="requestGeolocation"
+                    class="bg-blue-500 hover:bg-blue-600 active:scale-95 text-white font-semibold py-3 px-6 rounded-full shadow-md transition-all duration-300"
+                >
                     {{ $t('everything.locationPermissionGranted') }}
                 </button>
             </div>
 
-            <div v-if="locationError" class="mb-4 text-red-500 text-center">
+            <div v-if="locationError" class="mb-4 text-center text-red-600 font-medium animate-shake">
                 {{ locationError }}
             </div>
 
-            <div ref="data-table" id="map" class="w-full p-1 mt-3" style="height: 700px;"></div>
+            <div
+                ref="data-table"
+                id="map"
+                class="w-full p-1 mt-4 rounded-xl border border-blue-200 shadow-lg transition-all duration-500 hover:scale-[1.01]"
+                style="height: 700px;"
+            ></div>
         </div>
     </div>
 </template>
@@ -230,5 +240,37 @@ export default {
 .ballon_footer {
     font-size: 12px;
     color: #666;
+}
+
+@keyframes fade-in-slow {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-fade-in-slow {
+    animation: fade-in-slow 1.2s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-3px);
+    }
+}
+.animate-shake {
+    animation: shake 0.6s ease-in-out;
 }
 </style>

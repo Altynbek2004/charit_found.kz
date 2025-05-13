@@ -1,48 +1,84 @@
 <template>
     <body class="font-sans">
 
-    <header class="bg-blue-100 py-4">
-        <div class="container mx-auto max-w-screen-xl flex justify-between items-center px-4">
-            <div class="flex items-center gap-4 text-sm font-bold">
+    <!-- Header Section -->
+    <header class="bg-blue-200 py-4 shadow-md">
+        <div class="container mx-auto max-w-screen-xl flex justify-between items-center px-6">
+            <!-- Contacts Section -->
+            <div class="flex items-center gap-6 text-sm font-semibold text-blue-900">
                 <span>{{ $t('header.contacts') }}</span>
                 <span>{{ $t('header.email') }}</span>
             </div>
-            <div class="flex gap-2">
-                <a href="https://t.me/"><img src="/storage/app/public/imageMenu/telegram.png" class="w-8 h-8" alt="Telegram" /></a>
-                <a href="https://instagram.com"><img src="/storage/app/public/imageMenu/instagram.png" class="w-8 h-8" alt="Instagram" /></a>
-                <a href="https://wa.me/+77755938808"><img src="/storage/app/public/imageMenu/whatsapp.png" class="w-8 h-8" alt="Whatsapp" /></a>
+
+            <!-- Social Media Links -->
+            <div class="flex gap-4">
+                <a href="https://t.me/" class="transition-transform duration-300 hover:scale-110">
+                    <img src="/storage/app/public/imageMenu/telegram.png" class="w-8 h-8" alt="Telegram" />
+                </a>
+                <a href="https://instagram.com" class="transition-transform duration-300 hover:scale-110">
+                    <img src="/storage/app/public/imageMenu/instagram.png" class="w-8 h-8" alt="Instagram" />
+                </a>
+                <a href="https://wa.me/+77755938808" class="transition-transform duration-300 hover:scale-110">
+                    <img src="/storage/app/public/imageMenu/whatsapp.png" class="w-8 h-8" alt="Whatsapp" />
+                </a>
             </div>
         </div>
     </header>
 
-    <nav class="bg-white shadow-sm py-4">
-        <div class="container mx-auto max-w-screen-xl flex justify-between items-center px-4">
-            <!-- Лого -->
-            <div class="flex items-center gap-4">
-                <img src="/storage/app/public/imageMenu/logo_chari_found.png" alt="Logo" class="h-16" />
-                <span class="text-xl font-semibold whitespace-nowrap">Flowbite</span>
+    <!-- Navigation Section -->
+    <nav class="bg-white shadow-lg py-4">
+        <div class="container mx-auto max-w-screen-xl flex justify-between items-center px-6">
+
+            <!-- Logo Section -->
+            <div class="flex items-center gap-6">
+                <img src="/storage/app/public/imageMenu/logo_chari_found.png" alt="Logo" class="h-16 transition-transform duration-300 hover:scale-110" />
+                <span class="text-2xl font-semibold text-blue-900">Flowbite</span>
             </div>
 
-            <ul class="hidden md:flex space-x-6 font-bold">
-                <li><a href="#top" @click.prevent="scrollToSection('top')" class="hover:underline">{{ $t('nav.home') }}</a></li>
-                <li><a href="#about" @click.prevent="scrollToSection('about')" class="hover:underline">{{ $t('nav.about') }}</a></li>
-                <li><a href="#pets" @click.prevent="scrollToSection('pets')" class="hover:underline">{{ $t('nav.pets') }}</a></li>
-                <li><a href="#assistant" @click.prevent="scrollToSection('assistant')" class="hover:underline">{{ $t('nav.assistant') }}</a></li>
+            <!-- Navigation Links -->
+            <ul class="hidden md:flex space-x-8 font-bold text-lg text-blue-900">
+                <li>
+                    <a href="/#top" class="transition-all duration-300 hover:text-blue-600 hover:underline">
+                        {{ $t('nav.home') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="/#about" class="transition-all duration-300 hover:text-blue-600 hover:underline">
+                        {{ $t('nav.about') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="/#pets" class="transition-all duration-300 hover:text-blue-600 hover:underline">
+                        {{ $t('nav.pets') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="/#assistant" class="transition-all duration-300 hover:text-blue-600 hover:underline">
+                        {{ $t('nav.assistant') }}
+                    </a>
+                </li>
             </ul>
 
+            <!-- Language Dropdown and Login Button -->
             <div class="relative">
                 <div class="flex items-center gap-6">
-                    <span class="text-lg font-bold cursor-pointer" @click="toggleDropdown">
-                        {{ selectedLanguage }}
-                    </span>
-
-                    <router-link to="/register" class="text-lg font-bold">{{ $t('nav.login') }}</router-link>
+            <span class="text-lg font-bold cursor-pointer transition-all duration-300 hover:text-blue-600" @click="toggleDropdown">
+              {{ selectedLanguage }}
+            </span>
+                    <router-link to="/login" class="text-lg font-bold text-blue-900 hover:text-blue-600 transition-all duration-300">
+                        {{ $t('nav.login') }}
+                    </router-link>
                 </div>
 
-                <div v-if="showDropdown" class="absolute mt-2 bg-white shadow-lg rounded-md z-50 w-24">
+                <!-- Language Dropdown -->
+                <div v-if="showDropdown" class="absolute mt-2 bg-white shadow-lg rounded-md z-50 w-32">
                     <ul>
-                        <li v-for="lang in languages" :key="lang.code" @click.stop="selectLanguage(lang.code, lang.display)"
-                            class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <li
+                            v-for="lang in languages"
+                            :key="lang.code"
+                            @click.stop="selectLanguage(lang.code, lang.display)"
+                            class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all duration-300"
+                        >
                             {{ lang.display }}
                         </li>
                     </ul>
@@ -50,9 +86,10 @@
             </div>
         </div>
     </nav>
-    </body>
 
+    </body>
 </template>
+
 
 <script>
 import { useI18n } from 'vue-i18n';

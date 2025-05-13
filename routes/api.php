@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdoptPetController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\FoundPetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,11 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Публичные маршруты
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+});
 
-// Found pets routes
+
+//// Found pets routes
 Route::apiResource('found-pets', FoundPetController::class);
 
 // Get recent pets

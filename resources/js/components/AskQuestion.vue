@@ -1,15 +1,15 @@
 <template>
-    <div class="bg-blue-100 min-h-screen p-6">
-        <h2 class="text-xl font-bold text-center mb-4">
+    <div class="bg-[#e6f7ff] min-h-screen p-6">
+        <h2 class="text-2xl font-bold text-center text-[#00bfff] mb-6">
             {{ $t('askQuestion.title') }}
         </h2>
 
-        <div class="bg-blue-50 rounded-lg p-6 max-w-4xl mx-auto shadow min-h-[800px] flex flex-col justify-between">
+        <div class="bg-white rounded-2xl p-6 max-w-4xl mx-auto shadow-2xl min-h-[800px] flex flex-col justify-between transition-all duration-300">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-lg font-bold">{{ $t('askQuestion.chat') }}</h3>
+                <h3 class="text-xl font-semibold text-[#00bfff]">{{ $t('askQuestion.chat') }}</h3>
                 <button
                     @click="clearChat"
-                    class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm"
+                    class="bg-[#dbeeff] hover:bg-[#c0e4ff] text-[#0077b6] px-4 py-2 rounded-md text-sm transition-colors duration-200 shadow-sm disabled:opacity-50"
                     :disabled="messages.length <= 1"
                 >
                     {{ $t('askQuestion.clear') }}
@@ -17,43 +17,52 @@
             </div>
 
             <!-- Сообщения -->
-            <div class="overflow-y-auto h-[600px] space-y-4 mb-6" ref="messagesContainer">
-                <div v-if="messages.length === 0" class="text-center text-gray-500 italic">
+            <div class="overflow-y-auto h-[600px] space-y-4 mb-6 pr-2" ref="messagesContainer">
+                <div v-if="messages.length === 0" class="text-center text-gray-400 italic">
                     {{ $t('askQuestion.start') }}
                 </div>
-                <div v-for="(msg, index) in messages" :key="index"
-                     :class="[
-                        msg.role === 'user' ? 'bg-gray-200 ml-auto' : 'bg-blue-200',
-                        'rounded px-4 py-2 max-w-sm break-words'
-                    ]">
+                <div
+                    v-for="(msg, index) in messages"
+                    :key="index"
+                    :class="[
+                        msg.role === 'user'
+                            ? 'bg-[#e0f7ff] text-gray-800 self-end'
+                            : 'bg-[#d0f0ff] text-gray-900 self-start',
+                        'rounded-xl px-4 py-3 max-w-[70%] transition-transform duration-200 transform hover:scale-[1.02] shadow-sm'
+                    ]"
+                >
                     {{ msg.content }}
                 </div>
-                <div v-if="loading" class="bg-blue-200 rounded px-4 py-2 max-w-sm">
+                <div
+                    v-if="loading"
+                    class="bg-[#d0f0ff] rounded-xl px-4 py-3 max-w-sm animate-pulse text-gray-700 shadow-sm"
+                >
                     <span class="loading-animation">{{ $t('askQuestion.typing') }}<span>.</span><span>.</span><span>.</span></span>
                 </div>
             </div>
 
-            <form @submit.prevent="sendMessage" class="flex flex-col sm:flex-row w-full">
+            <!-- Ввод -->
+            <form @submit.prevent="sendMessage" class="flex flex-col sm:flex-row w-full gap-2">
                 <input
                     type="text"
                     v-model="userMessage"
                     :placeholder="$t('askQuestion.input')"
-                    class="w-full sm:flex-1 px-4 py-2 rounded-t sm:rounded-l sm:rounded-tr-none border border-gray-300 focus:outline-none"
+                    class="w-full sm:flex-1 px-4 py-3 rounded-lg border border-[#00bfff] focus:ring-2 focus:ring-[#00bfff] outline-none transition-all duration-200 shadow-sm"
                     maxlength="255"
                     :disabled="loading"
                 />
                 <button
                     type="submit"
-                    class="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded-b sm:rounded-r sm:rounded-bl-none hover:bg-blue-600 disabled:bg-blue-300 transition"
+                    class="w-full sm:w-auto bg-[#00bfff] text-white px-6 py-3 rounded-lg hover:bg-[#00a8e8] transition-all duration-200 disabled:opacity-50 shadow-md"
                     :disabled="loading || !userMessage.trim()"
                 >
                     {{ $t('askQuestion.send') }}
                 </button>
             </form>
-
         </div>
     </div>
 </template>
+
 
 <script>
 import axios from 'axios';
