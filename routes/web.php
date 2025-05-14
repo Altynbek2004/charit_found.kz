@@ -32,6 +32,7 @@ Route::middleware( 'auth:sanctum')->group(function () {
     Route::Resource('found-pets', FoundPetController::class);
 });
 
-Route::get('/{any}', function () {
+Route::get('{any}', function () {
     return view('welcome');
-})->where('any', '.*');
+})->where('any', '^(?!storage).*$');
+
