@@ -8,6 +8,8 @@ import Navbar from "../components/Navbar.vue";
 import Login from "../components/auth/Login.vue";
 import ForgotPassword from "../components/auth/ForgotPassword.vue";
 import ResetPassword from "../components/auth/ResetPassword.vue";
+import AdminContentManagement from "../components/AdminContentManagement.vue";
+import AdminPage from "../components/AdminPage.vue";
 
 const routes = [
     {
@@ -55,6 +57,14 @@ const routes = [
     {
         path: '/navbar',
         component: Navbar,
+    },
+    {
+        path: '/admin/panel/users',
+        component: AdminPage
+    },
+    {
+        path: '/admin/panel/content',
+        component: AdminContentManagement,
     },
 ];
 

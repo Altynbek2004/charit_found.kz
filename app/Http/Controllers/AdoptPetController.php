@@ -167,4 +167,12 @@ class AdoptPetController extends Controller
             'message' => 'Объявление успешно удалено'
         ]);
     }
+
+
+    public function adoptShowAdmin()
+    {
+
+        $adopts = AdoptPet::all();
+        return response()->json($adopts);
+    }
 }

@@ -30,15 +30,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
 });
 
+Route::get('/user',[AuthController::class, 'getUser']);
 
 //// Found pets routes
 Route::apiResource('found-pets', FoundPetController::class);
+Route::get('/found-pet/show',[FoundPetController::class,'foundShowAdmin']);
+
 
 // Get recent pets
 Route::get('recent-pets', [FoundPetController::class, 'getRecentPets']);
 
 // Adopt pets routes
 Route::apiResource('adopt-pets', AdoptPetController::class);
+Route::get('/adopt-pet/show',[AdoptPetController::class,'adoptShowAdmin']);
 
 // Adopt get recent pets
 Route::get('adopt-recent-pets', [AdoptPetController::class, 'getRecentPets']);
