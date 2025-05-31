@@ -376,7 +376,7 @@ export default {
 
             const token = localStorage.getItem('token');
 
-            console.log(token)  ;                                             9
+            console.log(token)  ;
             // Send data to Laravel backend
             axios.post('/found-pets', formData, {
                 headers: {

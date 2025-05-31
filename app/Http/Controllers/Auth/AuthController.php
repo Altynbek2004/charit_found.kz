@@ -159,9 +159,18 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Пайдаланушы аутентификацияланбаған'
+            ], 401);
+        }
+
         return response()->json([
             'success' => true,
-            'user' => $request->user()
+            'user' => $user
         ]);
     }
 
@@ -171,6 +180,26 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'user' => User::all()
+        ]);
+    }
+
+
+    public function updateProfile(Request $request,$id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully',
         ]);
     }
 

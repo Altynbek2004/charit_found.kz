@@ -10,6 +10,8 @@ import ForgotPassword from "../components/auth/ForgotPassword.vue";
 import ResetPassword from "../components/auth/ResetPassword.vue";
 import AdminContentManagement from "../components/AdminContentManagement.vue";
 import AdminPage from "../components/AdminPage.vue";
+import UserProfile from "../components/UserProfile.vue";
+import AdminFoundContentManagement from "../components/AdminFoundContentManagement.vue";
 
 const routes = [
     {
@@ -66,6 +68,14 @@ const routes = [
         path: '/admin/panel/content',
         component: AdminContentManagement,
     },
+    {
+        path: '/profile',
+        component: UserProfile
+    },
+    {
+        path: '/admin/panel/found',
+        component: AdminFoundContentManagement,
+    }
 ];
 
 const router = createRouter({

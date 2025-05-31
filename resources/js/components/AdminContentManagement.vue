@@ -46,11 +46,11 @@
                     </li>
                     <li class="px-3 py-2">
                         <a
-                            href="#"
+                            href="/admin/panel/found"
                             class="flex items-center px-2 py-2 text-gray-600 rounded-lg transition duration-200 ease-in-out hover:bg-gray-100 hover:shadow-md hover:ring-1 hover:ring-gray-300"
                         >
                             <i class="fas fa-home text-gray-500 w-5"></i>
-                            <span class="ml-3">Products / Items</span>
+                            <span class="ml-3">Lost animal / Потерянный животное</span>
                             <i class="fas fa-chevron-down ml-auto text-xs text-gray-400"></i>
                         </a>
                     </li>
@@ -114,33 +114,45 @@
             <!-- Top Header -->
             <header class="bg-white h-16 flex items-center justify-between px-6 shadow-sm">
                 <div class="flex items-center">
-                    <button class="text-gray-500 focus:outline-none mr-4 cursor-pointer !rounded-button whitespace-nowrap">
+                    <button class="text-gray-500 focus:outline-none mr-4 cursor-pointer">
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <i class="fas fa-search text-gray-400"></i>
-            </span>
-                        <input type="text" placeholder="Search..." class="border-none bg-gray-100 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-64" />
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                          <i class="fas fa-search text-gray-400"></i>
+                        </span>
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            class="border-none bg-gray-100 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-64"
+                        />
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button class="text-gray-500 hover:text-gray-700 cursor-pointer !rounded-button whitespace-nowrap">
-                        <i class="fas fa-cog text-xl"></i>
+
+                <div class="relative">
+                    <button @click="toggleDropdown" class="flex items-center cursor-pointer focus:outline-none">
+                        <img
+                            src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20business%20person%20with%20neutral%20expression%20on%20plain%20background%2C%20high%20quality%20portrait%2C%20professional%20looking&width=100&height=100&seq=avatar1&orientation=squarish"
+                            alt="User avatar"
+                            class="h-8 w-8 rounded-full object-cover"
+                        />
                     </button>
-                    <button class="text-gray-500 hover:text-gray-700 cursor-pointer !rounded-button whitespace-nowrap">
-                        <i class="far fa-question-circle text-xl"></i>
-                    </button>
-                    <button class="flex items-center cursor-pointer !rounded-button whitespace-nowrap">
-                        <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20business%20person%20with%20neutral%20expression%20on%20plain%20background%2C%20high%20quality%20portrait%2C%20professional%20looking&width=100&height=100&seq=avatar1&orientation=squarish" alt="User avatar" class="h-8 w-8 rounded-full object-cover" />
-                    </button>
+
+                    <!-- Dropdown -->
+                    <div
+                        v-if="isOpen"
+                        class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50"
+                    >
+                        <a href="#" @click="profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Профиль</a>
+                        <a href="#" @click="logout" class="block px-4 py-2 text-red-600 hover:bg-red-100">Шығу</a>
+                    </div>
                 </div>
             </header>
 
             <div class="p-6 bg-gray-50 min-h-screen">
                 <div class="flex items-center justify-between mb-4">
                     <div>
-                        <h2 class="text-xl font-semibold text-gray-800">Users</h2>
+                        <h2 class="text-xl font-semibold text-gray-800">Приютение животное</h2>
                     </div>
                 </div>
                 <div class="overflow-x-auto bg-white rounded-lg shadow">
@@ -158,24 +170,43 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
-                        <tr v-for="animal in adoptAnimals" :key="animal.id">
-                            <td class="px-4 py-3">
-                                <img :src="`/storage/${animal.photo_path}`" alt="pet" class="w-16 h-16 object-cover rounded" />
-                            </td>
-                            <td class="px-4 py-3 font-semibold text-gray-800">{{ animal.pet_name }}</td>
-                            <td class="px-4 py-3 capitalize">{{ animal.pet_type }}</td>
-                            <td class="px-4 py-3">{{ animal.age }} жаста</td>
-                            <td class="px-4 py-3">{{ animal.breed }}</td>
-                            <td class="px-4 py-3">{{ animal.location }}</td>
-                            <td class="px-4 py-3">
-                                <div>
-                                    <div class="font-medium">{{ animal.contact_name }}</div>
-                                    <div class="text-sm text-gray-500">{{ animal.contact_phone }}</div>
-                                    <div class="text-sm text-gray-500">{{ animal.contact_email }}</div>
-                                </div>
-                            </td>
-                            <td><i class="fa-solid fa-trash"></i></td>
-                        </tr>
+                            <tr v-for="animal in adoptAnimals" :key="animal.id">
+                                <td class="px-4 py-3">
+                                    <img :src="`/storage/${animal.photo_path}`" alt="pet" class="w-16 h-16 object-cover rounded" />
+                                </td>
+                                <td class="px-4 py-3 font-semibold text-gray-800">{{ animal.pet_name }}</td>
+                                <td class="px-4 py-3 capitalize">{{ animal.pet_type }}</td>
+                                <td class="px-4 py-3">{{ animal.age }} жаста</td>
+                                <td class="px-4 py-3">{{ animal.breed }}</td>
+                                <td class="px-4 py-3">{{ animal.location }}</td>
+                                <td class="px-4 py-3">
+                                    <div>
+                                        <div class="font-medium">{{ animal.contact_name }}</div>
+                                        <div class="text-sm text-gray-500">{{ animal.contact_phone }}</div>
+                                        <div class="text-sm text-gray-500">{{ animal.contact_email }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <svg
+                                        @click="deleteAnimal(animal.id)"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="red"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="cursor-pointer hover:scale-110 transition-transform"
+                                    >
+                                        <path d="M3 6h18"></path>
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                    </svg>
+                                </td>
+
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -187,7 +218,44 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
+import {useRouter} from "vue-router";
 const adoptAnimals = ref([]);
+
+
+
+
+
+const router = useRouter();
+const profile = () => {
+    router.push('/profile');
+}
+
+
+const isOpen = ref(false)
+const toggleDropdown = () => {
+    isOpen.value = !isOpen.value
+}
+
+
+const logout = async () => {
+    try {
+        const token = localStorage.getItem('token');
+
+        await axios.post('/api/logout', {}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        localStorage.removeItem('token');
+
+        window.location.href = '/login';
+
+    } catch (error) {
+        console.error('Logout error:', error);
+        alert('Шығу кезінде қате орын алды');
+    }
+};
 
 
 
@@ -201,6 +269,27 @@ onMounted(async () =>{
         }
     }
 });
+
+const deleteAnimal = async (animalId) => {
+    if (!confirm('Сіз расында осы жануарды жойғыңыз келе ме?')) return;
+
+    try {
+        const token = localStorage.getItem('token');
+        await axios.delete(`/api/adopt-pets/${animalId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        adoptAnimals.value = adoptAnimals.value.filter((animal) => animal.id !== animalId);
+
+        alert('Жануар сәтті жойылды');
+    } catch (error) {
+        console.error(error);
+        alert('Жою кезінде қате орын алды');
+    }
+};
+
 
 </script>
 

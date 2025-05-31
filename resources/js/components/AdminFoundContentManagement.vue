@@ -46,7 +46,7 @@
                     </li>
                     <li class="px-3 py-2">
                         <a
-                            href="/admin/panel/found"
+                            href="/"
                             class="flex items-center px-2 py-2 text-gray-600 rounded-lg transition duration-200 ease-in-out hover:bg-gray-100 hover:shadow-md hover:ring-1 hover:ring-gray-300"
                         >
                             <i class="fas fa-home text-gray-500 w-5"></i>
@@ -143,39 +143,88 @@
                         v-if="isOpen"
                         class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50"
                     >
-                        <a href="#" @click="profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Профиль</a>
-                        <a href="#" @click="logout" class="block px-4 py-2 text-red-600 hover:bg-red-100">Шығу</a>
+                        <a href="" @click="profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Профиль</a>
+                        <a href="" @click="logout" class="block px-4 py-2 text-red-600 hover:bg-red-100">Шығу</a>
                     </div>
                 </div>
             </header>
 
-            <!---Main Content--->
+            <div class="p-6 bg-gray-50 min-h-screen">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">Приютение животное</h2>
+                    </div>
+                </div>
+                <div class="overflow-x-auto bg-white rounded-lg shadow">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Фото</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Аты</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Жасы</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Тұқымы</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Орналасқан жері</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Байланыс</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Әрекеттер</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
+                        <tr v-for="animal in foundAnimals.data" :key="animal.id">
+                            <td class="px-4 py-3">
+                                <img :src="animal.photoUrl" alt="pet" class="w-16 h-16 object-cover rounded" />
+                            </td>
+                            <td class="px-4 py-3 font-semibold text-gray-800">{{ animal.petType }}</td>
+                            <td class="px-4 py-3 capitalize">{{ animal.age }} жаста</td>
+                            <td class="px-4 py-3">{{ animal.breed }}</td>
+                            <td class="px-4 py-3">{{ animal.location }}</td>
+                            <td class="px-4 py-3">
+                                <div>
+                                    <div class="font-medium">{{ animal.contactName }}</div>
+                                    <div class="text-sm text-gray-500">{{ animal.contactPhone }}</div>
+                                    <div class="text-sm text-gray-500">{{ animal.contactEmail }}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <svg
+                                    @click="deleteAnimal(animal.id)"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="red"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="cursor-pointer hover:scale-110 transition-transform"
+                                >
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                </svg>
+                            </td>
+                        </tr>
+                        </tbody>
 
-            <AdminUsersList></AdminUsersList>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
 
-<script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import * as echarts from "echarts";
-import axios from "axios";
-import AdminUsersList from "../components/AdminUsersList.vue";
+<script setup>
+import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
-const users = ref([]);
+const foundAnimals = ref({ data: [] });
 
-const chart1Container = ref<HTMLElement | null>(null);
-const chart2Container = ref<HTMLElement | null>(null);
-const chart3Container = ref<HTMLElement | null>(null);
-const chart4Container = ref<HTMLElement | null>(null);
 
 
 const router = useRouter();
 const profile = () => {
     router.push('/profile');
 }
-
-
 
 const logout = async () => {
     try {
@@ -204,232 +253,43 @@ const toggleDropdown = () => {
     isOpen.value = !isOpen.value
 }
 
-onMounted(async () => {
 
-    try {
-        const response = await axios.get('/api/user');
-        users.value = Array.isArray(response.data.user) ? response.data.user : [response.data.user];
-    } catch (error) {
-        console.error('Қате шықты ', error);
-    }
-
-    if (chart1Container.value) {
-        const chart1 = echarts.init(chart1Container.value);
-        chart1.setOption({
-            animation: false,
-            grid: {
-                top: 5,
-                right: 5,
-                bottom: 5,
-                left: 5,
-                show: false
-            },
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                show: false
-            },
-            yAxis: {
-                type: 'value',
-                show: false
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1130, 1020],
-                type: 'line',
-                smooth: true,
-                symbol: 'none',
-                lineStyle: {
-                    color: '#10B981'
-                },
-                areaStyle: {
-                    color: {
-                        type: 'linear',
-                        x: 0,
-                        y: 0,
-                        x2: 0,
-                        y2: 1,
-                        colorStops: [{
-                            offset: 0, color: 'rgba(16, 185, 129, 0.2)'
-                        }, {
-                            offset: 1, color: 'rgba(16, 185, 129, 0)'
-                        }]
-                    }
-                }
-            }]
-        });
-    }
-
-    // Chart 2 - Page Impressions
-    if (chart2Container.value) {
-        const chart2 = echarts.init(chart2Container.value);
-        chart2.setOption({
-            animation: false,
-            grid: {
-                top: 5,
-                right: 5,
-                bottom: 5,
-                left: 5,
-                show: false
-            },
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                show: false
-            },
-            yAxis: {
-                type: 'value',
-                show: false
-            },
-            series: [{
-                data: [720, 832, 1001, 834, 1090, 1330, 920],
-                type: 'line',
-                smooth: true,
-                symbol: 'none',
-                lineStyle: {
-                    color: '#EC4899'
-                },
-                areaStyle: {
-                    color: {
-                        type: 'linear',
-                        x: 0,
-                        y: 0,
-                        x2: 0,
-                        y2: 1,
-                        colorStops: [{
-                            offset: 0, color: 'rgba(236, 72, 153, 0.2)'
-                        }, {
-                            offset: 1, color: 'rgba(236, 72, 153, 0)'
-                        }]
-                    }
-                }
-            }]
-        });
-    }
-
-    // Chart 3 - Total Page Likes
-    if (chart3Container.value) {
-        const chart3 = echarts.init(chart3Container.value);
-        chart3.setOption({
-            animation: false,
-            grid: {
-                top: 5,
-                right: 5,
-                bottom: 5,
-                left: 5,
-                show: false
-            },
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                show: false
-            },
-            yAxis: {
-                type: 'value',
-                show: false
-            },
-            series: [{
-                data: [620, 732, 901, 934, 1290, 830, 1320],
-                type: 'line',
-                smooth: true,
-                symbol: 'none',
-                lineStyle: {
-                    color: '#6366F1'
-                },
-                areaStyle: {
-                    color: {
-                        type: 'linear',
-                        x: 0,
-                        y: 0,
-                        x2: 0,
-                        y2: 1,
-                        colorStops: [{
-                            offset: 0, color: 'rgba(99, 102, 241, 0.2)'
-                        }, {
-                            offset: 1, color: 'rgba(99, 102, 241, 0)'
-                        }]
-                    }
-                }
-            }]
-        });
-    }
-
-    // Chart 4 - Page Impressions
-    if (chart4Container.value) {
-        const chart4 = echarts.init(chart4Container.value);
-        chart4.setOption({
-            animation: false,
-            grid: {
-                top: 5,
-                right: 5,
-                bottom: 5,
-                left: 5,
-                show: false
-            },
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                show: false
-            },
-            yAxis: {
-                type: 'value',
-                show: false
-            },
-            series: [{
-                data: [520, 932, 701, 834, 1090, 1330, 920],
-                type: 'line',
-                smooth: true,
-                symbol: 'none',
-                lineStyle: {
-                    color: '#F59E0B'
-                },
-                areaStyle: {
-                    color: {
-                        type: 'linear',
-                        x: 0,
-                        y: 0,
-                        x2: 0,
-                        y2: 1,
-                        colorStops: [{
-                            offset: 0, color: 'rgba(245, 158, 11, 0.2)'
-                        }, {
-                            offset: 1, color: 'rgba(245, 158, 11, 0)'
-                        }]
-                    }
-                }
-            }]
-        });
+onMounted(async () =>{
+    {
+        try {
+            const response = await axios.get('/api/found-pets');
+            foundAnimals.value = response.data;
+            console.log(foundAnimals.value);
+        }catch (error) {
+            console.log(error);
+        }
     }
 });
+
+const deleteAnimal = async (animalId) => {
+    if (!confirm('Сіз расында осы жануарды жойғыңыз келе ме?')) return;
+
+    try {
+        const token = localStorage.getItem('token');
+        await axios.delete(`/api/found-pets/${animalId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        foundAnimals.value.data = foundAnimals.value.data.filter((animal) => animal.id !== animalId);
+
+        alert('Жануар сәтті жойылды');
+    } catch (error) {
+        console.error(error);
+        alert('Жою кезінде қате орын алды');
+    }
+};
+
+
 </script>
 
+
 <style scoped>
-.fa-facebook-f {
-    font-size: 1.5rem;
-}
 
-.fa-twitter {
-    font-size: 1.5rem;
-}
-
-.fa-instagram {
-    font-size: 1.5rem;
-}
-
-.fa-youtube {
-    font-size: 1.5rem;
-}
-
-.fa-pinterest-p {
-    font-size: 1.5rem;
-}
-
-.fa-linkedin-in {
-    font-size: 1.5rem;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
 </style>
